@@ -41,7 +41,8 @@ from subplot_cycler import SubplotCycler
 class Parameter:
     """
     Object that basicaly reimplements a float (with all its implicit
-    methods) with added attributes to make it fit-compatible.
+    methods) with added attributes to make it fit-compatible. That is,
+    all the operations are defined to be applied on Parameter.value.
 
 
     """
