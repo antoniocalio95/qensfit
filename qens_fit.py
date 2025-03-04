@@ -43,8 +43,7 @@ class Parameter:
     Object that basicaly reimplements a float (with all its implicit
     methods) with added attributes to make it fit-compatible. That is,
     all the operations are defined to be applied on Parameter.value.
-
-
+    Moreover, it supports indexing when the value is an array-like.
     """
     def __init__(self,
                  name: str,
@@ -203,7 +202,34 @@ class Parameter:
         return self.value is not other
 
 class ParList:
-    def __init__(self, parlist = [], curves = 1):
+    """
+    Parameter List object. Contains the Parameters in both list and dictionary
+    formats, a list of parameter names, number of free, fixed or global
+    parameters. The ParList object itself can be indexed both like an array
+    (requires knowledge of the order of paramters), and like a dictionary
+    (using parameter names as the key).
+    All the pack and unpack functions shouldn't be needed, as they're only
+    used when curve_fit is called, as it only accepts 1D inputs.
+    """
+    def __init__(self,
+                 parlist: list = None,
+                 curves: int = 1):
+        """
+        Initialize the ParList instance.
+
+        Parameters
+        ----------
+        parlist : list, optional
+            List containing the Parameter objects to add. The default is None.
+        curves : int, optional
+            Number of curves to be fitted simultaneously using those
+            parameters. The default is 1.
+
+        Returns
+        -------
+        None.
+
+        """
         self.list = parlist
         self.n_curves = curves
         self._init_pars()
@@ -212,7 +238,7 @@ class ParList:
         self.n_free = self._get_n_free()
         self.n_fixed = self._get_n_fixed()
         self.n_global = self._get_n_global()
-        self.n_total = ((self.n_curves *self.n_free) +
+        self.n_total = ((self.n_curves * self.n_free) +
                         (self.n_curves * self.n_fixed) +
                         self.n_global)
         self.values = self.unpack_values()
@@ -288,6 +314,19 @@ class ParList:
         self.errors = self.unpack_errors()
 
     def add_par(self, par):
+        """
+        Adds a parameter to the ParList instance.
+
+        Parameters
+        ----------
+        par : TYPE
+            Parameter object to be added (required).
+
+        Returns
+        -------
+        None.
+
+        """
         if par.is_global:
             par.value = 0.
             par.error = 0.
@@ -297,7 +336,23 @@ class ParList:
         self.list.append(par)
         self._update()
 
-    def unpack_pin(self):
+    def unpack_pin(self) -> np.ndarray:
+        """
+        Unpacks the initial values of all the parameters,
+        and stores them in a 1D numpy.ndarray
+
+        Raises
+        ------
+        RuntimeWarning
+            The initial value must be int or float (for global parameters),
+            list or numpy.ndarray (for free parameters).
+
+        Returns
+        -------
+        numpy.ndarray
+            1D array containing all the initial values.
+
+        """
         pin = []
         for i in range(self.n_curves):
             for par in self.list:
@@ -311,14 +366,30 @@ class ParList:
                     elif isinstance(par.ini, int):
                         pin.append(par.ini)
                     else:
-                        raise(RuntimeWarning('Initial value must be float,' +
-                                             ' list or array'))
+                        raise RuntimeWarning('Initial value must be float,' +
+                                             ' list or array')
         for par in self.list:
             if par.is_global:
                 pin.append(par.ini)
         return np.array(pin)
 
-    def unpack_bounds(self):
+    def unpack_bounds(self) -> (np.ndarray, np.ndarray):
+        """
+        Unpacks the bounds of all the parameters,
+        and stores them in a tuple of two 1D numpy.ndarray
+
+        Raises
+        ------
+        RuntimeWarning
+            The bounds must be int or float (for global parameters),
+            list or numpy.ndarray (for free parameters).
+
+        Returns
+        -------
+        (numpy.ndarray, numpy.ndarray)
+            tuple of two 1D arrays containing the upper and lower bounds.
+
+        """
         low = []
         for i in range(self.n_curves):
             for par in self.list:
@@ -328,8 +399,8 @@ class ParList:
                     elif isinstance(par.low, (int, float)):
                         low.append(par.low)
                     else:
-                        raise(RuntimeWarning('Bounds must be float,' +
-                                             ' list or array'))
+                        raise RuntimeWarning('Bounds must be int, float,' +
+                                             ' list or array')
         for par in self.list:
             if par.is_global:
                 low.append(par.low)
@@ -342,15 +413,26 @@ class ParList:
                     elif isinstance(par.high, (int, float)):
                         high.append(par.high)
                     else:
-                        raise(RuntimeWarning('Bounds must be float,' +
-                                             ' list or array'))
+                        raise RuntimeWarning('Bounds must be int, float,' +
+                                             ' list or array')
         for par in self.list:
             if par.is_global:
                 high.append(par.high)
 
         return (np.array(low), np.array(high))
 
-    def unpack_values(self):
+    def unpack_values(self) -> np.ndarray:
+        """
+        Unpacks the values of all the parameters,
+        and stores them in a 1D numpy.ndarray. If no fitting has been
+        attempted yet, all values will be equal to the initial values.
+
+        Returns
+        -------
+        numpy.ndarray
+            1D array containing all the parameter values.
+
+        """
         val = []
         for i in range(self.n_curves):
             for par in self.list:
@@ -361,7 +443,18 @@ class ParList:
                 val.append(par.value)
         return np.array(val)
 
-    def unpack_errors(self):
+    def unpack_errors(self) -> np.ndarray:
+        """
+        Unpacks the uncertainties of all the parameters,
+        and stores them in a 1D numpy.ndarray. If no fitting has been
+        attempted yet, all values will be None.
+
+        Returns
+        -------
+        numpy.ndarray
+            1D array containing all the uncertainties values.
+
+        """
         err = []
         for i in range(self.n_curves):
             for par in self.list:
@@ -373,6 +466,21 @@ class ParList:
         return np.array(err)
 
     def pack_values(self, vector: np.ndarray):
+        """
+        Packs the provided values into the Parameter objects into the ParList.
+        WARNING: don't use if you don't know EXACTLY the order of the
+        parameters!
+
+        Parameters
+        ----------
+        vector : numpy.ndarray
+            Array containing the values to be packed.
+
+        Returns
+        -------
+        None.
+
+        """
         self.values = vector
         l = 0
         for i in range(self.n_curves):
@@ -387,6 +495,22 @@ class ParList:
         self._make_dict()
 
     def pack_errors(self, vector: np.ndarray):
+        """
+        Packs the provided uncertaintiesinto the Parameter objects
+        into the ParList.
+        WARNING: don't use if you don't know EXACTLY the order of the
+        parameters!
+
+        Parameters
+        ----------
+        vector : numpy.ndarray
+            Array containing the uncertainties to be packed.
+
+        Returns
+        -------
+        None.
+
+        """
         self.errors = vector
         l = 0
         for i in range(self.n_curves):
@@ -400,7 +524,26 @@ class ParList:
                 l = l+1
         self._make_dict()
 
-    def free_to_df(self, index = None, index_title = None):
+    def free_to_df(self, index = None, index_title = None) -> pd.DataFrame:
+        """
+        Returns a pandas.DataFrame containing the values and uncertainties
+        for all the free parameters.
+        The index and its title can be customised.
+
+        Parameters
+        ----------
+        index : TYPE, optional
+            Index values for the DataFrame. The default is None.
+        index_title : TYPE, optional
+            Index title for the DataFrame. The default is None.
+
+        Returns
+        -------
+        df : pandas.DataFrame
+            DataFrame containing the values and uncertainties
+            for all the free parameters as columns.
+
+        """
         cols = []
         if index is None:
             index = range(1, self.n_curves + 1)
@@ -417,7 +560,26 @@ class ParList:
         df.index.name = index_title
         return df
 
-    def all_to_df(self, index = None, index_title = None):
+    def all_to_df(self, index = None, index_title = None) -> pd.DataFrame:
+        """
+        Returns a pandas.DataFrame containing the values and uncertainties
+        for all the parameters (free and global).
+        The index and its title can be customised.
+
+        Parameters
+        ----------
+        index : TYPE, optional
+            Index values for the DataFrame. The default is None.
+        index_title : TYPE, optional
+            Index title for the DataFrame. The default is None.
+
+        Returns
+        -------
+        df : pandas.DataFrame
+            DataFrame containing the values and uncertainties
+            for all the parameters (free and global) as columns.
+
+        """
         cols = []
         if index is None:
             index = range(1, self.n_curves + 1)
@@ -432,7 +594,28 @@ class ParList:
         df.index.name = index_title
         return df
 
-    def global_to_df(self, index = [1], index_title = None):
+    def global_to_df(self, index = [1], index_title = None) -> pd.DataFrame:
+        """
+        Returns a pandas.DataFrame containing the values and uncertainties
+        for the global parameters. This will have different dimensions than
+        the DataFrame returned by all_to_df() or free_to_df(), as each global
+        parameter will correspond to multiple curves.
+        The index and its title can be customised.
+
+        Parameters
+        ----------
+        index : TYPE, optional
+            Index values for the DataFrame. The default is [1].
+        index_title : TYPE, optional
+            Index title for the DataFrame. The default is None.
+
+        Returns
+        -------
+        df : pandas.DataFrame
+            DataFrame containing the values and uncertainties
+            for the global parameters as columns.
+
+        """
         cols = []
         for par in self.list:
             if par.is_global:
@@ -447,7 +630,20 @@ class ParList:
         df.index.name = index_title
         return df
 
-    def all_to_df_noerr(self):
+    def all_to_df_noerr(self) -> pd.DataFrame:
+        """
+        Returns a pandas.DataFrame containing the values
+        for all the parameters (free and global).
+        No uncertainties are provided!
+
+        Returns
+        -------
+        df : pandas.DataFrame
+            DataFrame containing the values
+            for all the parameters (free and global) as columns.
+            No uncertainties are provided!
+
+        """
         df = pd.DataFrame(data = None,
                           columns = self.names,
                           index = range(1, self.n_curves + 1))
@@ -456,12 +652,47 @@ class ParList:
         return df
 
 class QENSDataset:
+    """
+    Dataset object which can be instantiated by itself, provided with
+    suitable data, or it can be automatically created by the load_ascii
+    function. Data is checked automatically for dimension mismatches.
+    """
     def __init__(self,
                  name: str = '_',
-                 x = [],
-                 y = [],
-                 dy = [],
-                 q = []):
+                 x: list or np.ndarray = None,
+                 y: list or np.ndarray = None,
+                 dy: list or np.ndarray = None,
+                 q: list or np.ndarray = None):
+        """
+        Initialise the QENSDataset instance.
+
+        Parameters
+        ----------
+        name : str, optional
+            Dataset name. The default is '_'.
+        x : list or np.ndarray, optional
+            Dataset x axis, i.e. the Energy axis.
+            Has to have the same dimensions as y and dy.
+            The default is None.
+        y : list or np.ndarray, optional
+            Dataset y axis, i.e. the Scattering Intensity axis.
+            Has to have the same dimensions as x and dy.
+            The default is None.
+        dy : list or np.ndarray, optional
+            Dataset dy axis, i.e. the Errors axis.
+            Has to have the same dimensions as x and yy.
+            The default is None.
+        q : list or np.ndarray, optional
+            Dataset q axis, i.e. the Momentum Transfer axis.
+            If x, y and dy have dimensions (N, M), then
+            q has to be 1D and of length N.
+            The default is None.
+
+        Returns
+        -------
+        None.
+
+        """
         self.name = name
         self.x = np.array(x)
         self.y = np.array(y)
