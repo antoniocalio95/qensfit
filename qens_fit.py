@@ -4,13 +4,18 @@ Created on Thu Sep 26 16:09:16 2024
 
 @author: Antonio Caliò
 
-A little library that enables easy fitting of QENS data.
+A little library that enables easy fitting of Quasielastic
+Neutron Scattering data.
+It borrows some concept from the popular lmfit package,
+such as the Model and Parameter objects, but everything is
+implemented from scratch to make it compatible with
+Global Fitting procedures, which are essential for QENS data.
 
 USAGE:
 
 - Use LoadAscii to load data reduced with Mantid, or load your data another
-way and then wrap it in a QENSDataset instance. Loading of multiple datasets
-is supported.
+way and then organise it in a dictionary of QENSDataset instances.
+Loading of multiple datasets is supported.
 
 - Define your model function to fit the data. Constants are also supported.
 
@@ -343,7 +348,7 @@ class ParList:
 
         Raises
         ------
-        RuntimeWarning
+        RuntimeError
             The initial value must be int or float (for global parameters),
             list or numpy.ndarray (for free parameters).
 
@@ -366,7 +371,7 @@ class ParList:
                     elif isinstance(par.ini, int):
                         pin.append(par.ini)
                     else:
-                        raise RuntimeWarning('Initial value must be float,' +
+                        raise RuntimeError('Initial value must be float,' +
                                              ' list or array')
         for par in self.list:
             if par.is_global:
@@ -380,7 +385,7 @@ class ParList:
 
         Raises
         ------
-        RuntimeWarning
+        RuntimeError
             The bounds must be int or float (for global parameters),
             list or numpy.ndarray (for free parameters).
 
@@ -399,7 +404,7 @@ class ParList:
                     elif isinstance(par.low, (int, float)):
                         low.append(par.low)
                     else:
-                        raise RuntimeWarning('Bounds must be int, float,' +
+                        raise RuntimeError('Bounds must be int, float,' +
                                              ' list or array')
         for par in self.list:
             if par.is_global:
@@ -413,7 +418,7 @@ class ParList:
                     elif isinstance(par.high, (int, float)):
                         high.append(par.high)
                     else:
-                        raise RuntimeWarning('Bounds must be int, float,' +
+                        raise RuntimeError('Bounds must be int, float,' +
                                              ' list or array')
         for par in self.list:
             if par.is_global:
@@ -721,6 +726,12 @@ class QENSDataset:
                                f'and {self.dy.shape[0]} error vectors.')
 
 class QENSResult:
+    """
+    Contains the results of the fit. It is instantiated bu Model.run_fit()
+    when a dataset is fitted.
+    WARNING: If this object is used outside its intended scope,
+    the validate_result() method has to be called by hand!
+    """
     def __init__(self,
                  name: str = '_',
                  x: np.ndarray = None,
@@ -733,6 +744,53 @@ class QENSResult:
                  mesg: str = None,
                  ier: int = None,
                  residuals: np.ndarray = None):
+        """
+        Initialise the QENSResult instance.
+
+        Parameters
+        ----------
+        name : str, optional
+            Result name. Usually the same as the QENSDataset it refers to.
+            The default is '_'.
+        x : np.ndarray, optional
+            Result x axis. This array is denser than the input data (i.e.
+            QENSDataset.x) to make the plots look smoother.
+            The default is None.
+        y : np.ndarray, optional
+            Result y axis, i.e. the model function evaluated at the best fit
+            parameter values. The default is None.
+        params : ParList, optional
+            ParList instance containing the best fit parameters.
+            The default is None.
+        chisq : float, optional
+            Chi squared value for the global fit. The default is None.
+        popt : np.ndarray, optional
+            1D vector containing the values of the best fit parameters.
+            See scipy.optimize.curve_fit for more info. The default is None.
+        pcov : np.ndarray, optional
+            2D vector containing approximate covariance of popt.
+            See scipy.optimize.curve_fit for more info. The default is None.
+        infodict : dict, optional
+            Dictionary containing the keys 'nfev' (number of function
+            evaluations) and 'fvec' (Residuals evaluated at the solution
+            in a 1D array).
+            See scipy.optimize.curve_fit for more info. The default is None.
+        mesg : str, optional
+            A string message giving information about the solution.
+            See scipy.optimize.curve_fit for more info.. The default is None.
+        ier : int, optional
+            An integer flag. If it is equal to 1, 2, 3 or 4, the solution
+            was found. Otherwise, the solution was not found..
+            See scipy.optimize.curve_fit for more info. The default is None.
+        residuals : np.ndarray, optional
+            Residuals (infodict['fvec']) reshaped to have the same dimensions
+            of the y axis. The default is None.
+
+        Returns
+        -------
+        None.
+
+        """
         self.name = name
         self.x = x
         self.y = y
@@ -756,7 +814,21 @@ class QENSResult:
                 f'ier = {self.ier}, : {self.mesg}'
                 f'\nchi^2 = {self.chisq}\n')
 
-    def _validate_result(self):
+    def validate_result(self):
+        """
+        Checks if all the arguments have been passed properly to the Result
+        instance after the fit has been run.
+
+        Raises
+        ------
+        RuntimeError
+            If any argument for QENSResult is None, an error is raised.
+
+        Returns
+        -------
+        None.
+
+        """
         if all(i is None for i in [self.x,
                                    self.y,
                                    self.params,
@@ -770,6 +842,22 @@ class QENSResult:
             raise RuntimeError('Result incomplete, an argument was not passed')
 
     def print_result(self, index = None, index_title = None):
+        """
+        Prints all the best fit parameters in a nice readable way, as a
+        pandas.DataFrame. The index and its title can be customised.
+
+        Parameters
+        ----------
+        index : TYPE, optional
+            Index values for the DataFrame. The default is None.
+        index_title : TYPE, optional
+            Index title for the DataFrame. The default is None.
+
+        Returns
+        -------
+        None.
+
+        """
         if self.ier in [1, 2, 3, 4]:
             converged = 'Yes'
         else:
@@ -875,7 +963,7 @@ class Model:
                 self.params.pack_values(self.res[key].popt)
                 self.params.pack_errors(3*np.sqrt(np.diag(self.res[key].pcov)))
                 self.res[key].params = copy.deepcopy(self.params)
-                self.res[key]._validate_result()
+                self.res[key].validate_result()
                 self.res[key].print_result(index = self.ds[key].q,
                                        index_title = 'q')
                 bar()
@@ -1063,10 +1151,10 @@ if __name__ == "__main__":
         y2[i] = (15. * (np.sin((i+1)/2 * x[i] + 2.) * np.exp(-x[i] / q[i])) +
                 (2. * np.random.random_sample(y[i].shape) - 1))
 
-    madonna = {'1': QENSDataset(x = x, y = y, dy = dy, q = q),
-               '5': QENSDataset(x = x, y = y2, dy = dy, q = q)}
+    data = {'1': QENSDataset(x = x, y = y, dy = dy, q = q),
+            '5': QENSDataset(x = x, y = y2, dy = dy, q = q)}
 
-    dio = Model(fitmodel, lst, madonna)
-    dio.run_fit()
-    dio.plot_fits(fmt = ' o')
-    dio.plot_par(fmt = ' o')
+    mod = Model(fitmodel, lst, data)
+    mod.run_fit()
+    mod.plot_fits(fmt = ' o')
+    mod.plot_par(fmt = ' o')
