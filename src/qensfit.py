@@ -1,33 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 26 16:09:16 2024
+Main API module
 
-@author: Antonio Caliò
-
-A little library that enables easy fitting of Quasielastic
-Neutron Scattering data.
-It borrows some concept from the popular lmfit package,
-such as the Model and Parameter objects, but everything is
-implemented from scratch to make it compatible with
-Global Fitting procedures, which are essential for QENS data.
-
-USAGE:
-
-- Use LoadAscii to load data reduced with Mantid, or load your data another
-way and then organise it in a dictionary of QENSDataset instances.
-Loading of multiple datasets is supported.
-
-- Define your model function to fit the data. Constants are also supported.
-
-- Declare a list of Parameter obejcts to control their initial value, bounds,
-and whether the parameter is fixed and/or global.
-
-- Declare a model instance using the function you wrote before as the target,
-and feed it the list of Parameter objects and the QENSDataset.
-
-- Run the fit.
-
-- Plot fits and parameters, and Save your results.
 """
 
 import inspect
@@ -41,7 +15,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 from alive_progress import alive_bar
-from subplot_cycler import SubplotCycler
+from plotcycler import SubplotCycler
 
 class Parameter:
     """
@@ -210,9 +184,12 @@ class ParList:
     """
     Parameter List object. Contains the Parameters in both list and dictionary
     formats, a list of parameter names, number of free, fixed or global
-    parameters. The ParList object itself can be indexed both like an array
+    parameters.
+
+    The ParList object itself can be indexed both like an array
     (requires knowledge of the order of paramters), and like a dictionary
     (using parameter names as the key).
+
     All the pack and unpack functions shouldn't be needed, as they're only
     used when curve_fit is called, as it only accepts 1D inputs.
     """
@@ -1132,12 +1109,12 @@ if __name__ == "__main__":
 
     plt.close('all')
 
-    def fitmodel(x, /, A, omega, phi, *, q):
-        return A * np.sin(omega * x + phi) * np.exp(-x / q)
+    def fitmodel(x, /, a, omega, phi, *, q):
+        return a * np.sin(omega * x + phi) * np.exp(-x / q)
 
     lst = [Parameter('omega', [0.2, 0.6, 1.7], 0., 50.),
            Parameter('phi', 1., 0., 5., is_global = True),
-           Parameter('A', 10., 5., 25., is_fixed = False),]
+           Parameter('a', 10., 5., 25., is_fixed = False),]
 
     x = np.array([np.linspace(0,20,201) for _ in range(3)])
     y = np.zeros(x.shape)
