@@ -2,12 +2,7 @@ API
 ===
 .. autosummary::
    :toctree: generated
-   :signatures: long
+   :recursive:
 
    qensfit
-
------------
-
-.. automodule:: qensfit
-   :members:
-   :undoc-members:
+   plotcycler

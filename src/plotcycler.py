@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Feb 23 13:21:02 2024
-
-@author: ANTONINO16
+Module containing the SubplotCycler Class, a utility to plot datasets
+containing multiple curves in a single window, and cycle through them
+using buttons.
 """
 
 import os
@@ -13,17 +13,56 @@ from matplotlib.widgets import Button
 from matplotlib.gridspec import GridSpec
 
 class SubplotCycler:
-    """Create an object that permits to cycle between graphs on the same window"""
+    """
+    Create an object that permits to cycle between graphs on the same window.
+    Supports plots with multiple rows as well.
+    """
     def __init__(self,
-                 figure,
-                 axes,
-                 simultaneous_plots = 1):
+                 figure: plt.Figure,
+                 axes: np.ndarray,
+                 simultaneous_plots: int = 1):
+        """
+        Initialises the cycler object by passing it the figure and the
+        axes on which it has to act, and the number of plots that the
+        user wishes to show simultaneously
+
+        Parameters
+        ----------
+        figure : plt.Figure
+            Figure object on which the cycler will act.
+        axes : np.ndarray
+            Array containing.
+        simultaneous_plots : int, optional
+            Number of subplots columns that the user wishes to show at once.
+            The default is 1.
+
+            The maximum is 4 in case of multi-row plots (i.e. ``axes`` is
+            a 2D array), for compatibility with the 4 buttons.
+
+            In case of a single-row plot (i.e. ``axes`` is a 1D array)
+            and ``simultaneous_plots > 4``, the subplots will be rearranged
+            on multiple rows to make them fit in the same window.
+
+        Raises
+        ------
+        RuntimeError
+            An error is raised if you have N subplots and want to
+            show M at a time, but M is not an even divisor of N, or
+            if you have a multi-row plot (i.e. ``axes`` is a 2D array)
+            but you set ``simultaneous_plots > 4``.
+
+        Returns
+        -------
+        None.
+
+        """
         self.fig = figure
+        # Number of columns to be shown at once
         if simultaneous_plots <= 4:
-            self.n_cols = simultaneous_plots # Number of columns to be shown at once
+            self.n_cols = simultaneous_plots
         else:
             self.n_cols  = 4
-            
+
         if axes.size % simultaneous_plots != 0:
             raise RuntimeError('simultaneous_plots is not an even divisor '
                                'of the total number of plots.')
@@ -52,7 +91,7 @@ class SubplotCycler:
                 self.n_subplots = len(axes)  # Number of columns in axes
                 self.n_pages = len(axes) // simultaneous_plots
             else:
-                add_ratios = [1 for _ in range(simultaneous_plots//4)] +  [0.15]
+                add_ratios = [1 for _ in range(simultaneous_plots//4)] + [0.15]
                 self.n_rows = (simultaneous_plots // 4) + 1
                 self.n_subplots = len(axes)
                 self.n_pages = len(axes) // simultaneous_plots
@@ -70,7 +109,7 @@ class SubplotCycler:
         self.height_ratios = (
             self.axes[0,0].get_subplotspec().get_gridspec().get_height_ratios()
             + add_ratios)
-        
+
         # Reshape grid to accomodate the buttons
         self.gs = GridSpec(self.n_rows+1,
                            4,
@@ -125,19 +164,25 @@ class SubplotCycler:
         self.fig.canvas.draw()
 
     def next_subplot(self, event):
-        """Switches to the next group of subplots"""
+        """
+        Switches to the next group of subplots when the buton is clicked
+        """
         if self.current_subplot < (self.n_pages - 1) * self.n_cols:
             self.current_subplot += self.n_cols
             self.show_subplot()
 
     def prev_subplot(self, event):
-        """Switches to the previous group of subplots"""
+        """
+        Switches to the previous group of subplots when the buton is clicked
+        """
         if self.current_subplot > 0:
             self.current_subplot -= self.n_cols
             self.show_subplot()
 
     def save(self, event):
-        """Saves current figure in png format"""
+        """
+        Saves current figure in png format when the buton is clicked
+        """
         if os.getcwd().split('\\')[-1] != 'figures':
             if not os.path.exists('./figures/'):
                 os.mkdir('./figures/')
@@ -157,7 +202,9 @@ class SubplotCycler:
         self.fig.savefig(fname, dpi = 300)
 
     def save_all(self, event):
-        """Saves all figures in png format"""
+        """
+        Saves all figures in png format when the buton is clicked
+        """
         self.current_subplot = 0
         self.show_subplot()
         for _ in range(self.n_subplots // self.n_cols):
@@ -191,12 +238,12 @@ if __name__ == "__main__":
         frame_ids = np.arange(100)
         isum_i = np.sin(frame_ids * 0.1) + k
         good_frames = frame_ids[frame_ids % 10 == 0]
-        
+
         ax[0,k].plot(q, I, color='tab:red')
         ax[0,k].set_xlabel(r'$q\ (\AA^{-1})$')
         ax[0,k].set_ylabel('Scattering Intensity (A.U.)')
         ax[0,k].set_title('I(q)')
-        
+
         if ax.shape[0] > 1:
             ax[1,k].plot(frame_ids - k * N_STEPS, isum_i)
             ax[1,k].plot(good_frames - k * N_STEPS,

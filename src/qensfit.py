@@ -19,10 +19,41 @@ from plotcycler import SubplotCycler
 
 class Parameter:
     """
+
     Object that basicaly reimplements a float (with all its implicit
     methods) with added attributes to make it fit-compatible. That is,
     all the operations are defined to be applied on Parameter.value.
     Moreover, it supports indexing when the value is an array-like.
+
+    Attributes
+    ----------
+    name : str
+        Name of the ``Parameter``
+    ax_name : str
+        Y axis label when the parameter is plotted. If None, ``name`` is used
+    ini : float or list or np.ndarray
+        Initial value(s) of the ``Parameter``
+    low : float or list or np.ndarray
+        Lower bound(s) of the ``Parameter``.
+    high : float or list or np.ndarray
+        Upper bound(s) of the ``Parameter``.
+    is_fixed : bool
+        Whether the ``Parameter`` is constrained to ``ini`` during the
+        fitting.
+    is_global : bool
+        Whether the ``Parameter`` is global or not, i.e. the same value
+        will be shared to fit multiple curves.
+    is_free : bool
+        Whether the ``Parameter`` is free, i.e. not fixed and not global.
+    value : float or np.ndarray
+        Value(s) of the ``Parameter``. It changes during the fitting
+        procedure, and will be equal to the best fit value after
+        it has converged.
+    error : float or np.ndarray
+        Uncertainty(ies) on the ``Parameter.value``. It is calculated as
+        ``3 * sqrt(diag(cov))`` where ``cov`` is the covariance matrix
+        returned by ``curve_fit``.
+
     """
     def __init__(self,
                  name: str,
@@ -845,12 +876,18 @@ class QENSResult:
         print(self.params.all_to_df(index, index_title), '\n\n')
 
 class Model:
+    """
+    Object which takes in the target fit function, a list of ``Parameter``,
+    and the input data in the form of a dictionary of ``QENSDataset``.
+    A dictionary of ``QENSResult`` is generated when ``Model.run_fit()``
+
+    """
     def __init__(self,
                  func: callable,
                  parlist: list,
                  datasets: dict = None,
                  **kwargs):
-        self.target = func
+        self.target = func #: Target function, i.e. the model to be fit to the data
         self.pnames = []
         self.cnames = []
         if datasets is None:
