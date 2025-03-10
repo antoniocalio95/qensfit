@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Module containing the SubplotCycler Class, a utility to plot datasets
-containing multiple curves in a single window, and cycle through them
-using buttons.
+containing multiple curves in a single window, cycle through them
+using buttons, and save the figures.
 """
 
 import os
@@ -119,7 +119,7 @@ class SubplotCycler:
         # Reposition all subplots in the new grid and hide them
         for i in range(self.n_rows):
             for j in range(self.n_pages * self.n_cols):
-                if self.axes[i,j] == None:
+                if self.axes[i,j] is None:
                     self.axes[i,j] = plt.subplot()
                     self.axes[i,j].axis('off')
                 self.axes[i,j].set_subplotspec(self.gs[i, j % 4])

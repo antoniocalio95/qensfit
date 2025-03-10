@@ -120,16 +120,14 @@ class Parameter:
     def __getitem__(self, index):
         if isinstance(self.value, (list, np.ndarray)):
             return self.value[index]
-        else:
-            return self.value
+        return self.value
 
     def __setitem__(self, index, other):
         if isinstance(self.value, (list, np.ndarray)):
             self.value[index] = other
             return self
-        else:
-            self.value = other
-            return self
+        self.value = other
+        return self
 
     def __repr__(self):
         return (f"Parameter: {self.name}, Value = {self.value} +/- " +
@@ -223,6 +221,42 @@ class ParList:
 
     All the pack and unpack functions shouldn't be needed, as they're only
     used when curve_fit is called, as it only accepts 1D inputs.
+
+    Attributes
+    ----------
+    list : list of Parameter
+        Contains the ``Parameter`` objects in list form.
+    n_curves : int
+        Number of curves to be fitted simultaneously by the ``Model`` object.
+    dict : dict
+        Contains the ``Parameter`` objects in dictionary form.
+        The keys are ``Parameter.name``.
+    names : list of str
+        List containing the names of the Parameters.
+    n_free : int
+        Number of free Parameters that are being used in the fit (i.e.
+        the Parameter has a different value for each fitted curve).
+    n_fixed : int
+        Number of fixed Parameters that are being used in the fit (i.e.
+        the Parameter has a value that is fixed to its initial value
+        by the user).
+    n_global : int
+        Number of global Parameters that are being used in the fit (i.e.
+        the Parameter has the same value for all fitted curves, but it
+        is allowed to change between the bounds).
+    n_total : int
+        Total number of Parameters that are being used in the fit (i.e.
+        n_curves * (n_free + n_fixed) + n_global).
+    values : np.ndarray
+        1D array containing the values of all parameters.
+        WARNING: Use only in conjunction with curve_fit.
+        The proper way of getting a parameter value should be by using
+        the dict or list, so that the name can be checked.
+    errors : np.ndarray
+        1D array containing the uncertainties of all parameters.
+        WARNING: Use only in conjunction with curve_fit.
+        The proper way of getting a parameter uncertainty should be
+        by using the dict or list, so that the name can be checked.
     """
     def __init__(self,
                  parlist: list = None,
@@ -268,8 +302,7 @@ class ParList:
     def __getitem__(self, index):
         if isinstance(index, str):
             return self.dict[index]
-        else:
-            return self.list[index]
+        return self.list[index]
 
     def _init_pars(self):
         for par in self.list:
@@ -669,6 +702,23 @@ class QENSDataset:
     Dataset object which can be instantiated by itself, provided with
     suitable data, or it can be automatically created by the load_ascii
     function. Data is checked automatically for dimension mismatches.
+
+    Attributes
+    ----------
+    name : str
+        Dataset name.
+    x : np.ndarray
+        Dataset x axis, i.e. the Energy axis.
+    y : np.ndarray
+        Dataset y axis, i.e. the Scattering Intensity axis.
+    dy : np.ndarray
+        Dataset dy axis, i.e. the Errors axis.
+    q : np.ndarray
+        Dataset q axis, i.e. the Momentum Transfer axis.
+    n_q : int
+        Number of spectra, i.e. number of q points.
+    n_e : int
+        Number of energy values, i.e. number of bins in the spectra.
     """
     def __init__(self,
                  name: str = '_',
@@ -739,6 +789,41 @@ class QENSResult:
     when a dataset is fitted.
     WARNING: If this object is used outside its intended scope,
     the validate_result() method has to be called by hand!
+
+    Attributes
+    ----------
+    name : str
+        Result name. Usually the same as the QENSDataset it refers to.
+    x : np.ndarray
+        Result x axis. This array is denser than the input data (i.e.
+        QENSDataset.x) to make the plots look smoother.
+    y : np.ndarray
+        Result y axis, i.e. the model function evaluated at the best fit
+        parameter values.
+    params : ParList
+        ParList instance containing the best fit parameters.
+    chisq : float
+        Chi squared value for the global fit.
+    popt : np.ndarray
+        1D vector containing the values of the best fit parameters.
+        See scipy.optimize.curve_fit for more info.
+    pcov : np.ndarray
+        2D vector containing approximate covariance of popt.
+        See scipy.optimize.curve_fit for more info.
+    infodict : dict
+        Dictionary containing the keys 'nfev' (number of function
+        evaluations) and 'fvec' (Residuals evaluated at the solution
+        in a 1D array). See scipy.optimize.curve_fit for more info.
+    mesg : str
+        A string message giving information about the solution.
+        See scipy.optimize.curve_fit for more info.
+    ier : int
+        An integer flag. If it is equal to 1, 2, 3 or 4, the solution
+        was found. Otherwise, the solution was not found..
+        See scipy.optimize.curve_fit for more info.
+    residuals : np.ndarray
+        Residuals (infodict['fvec']) reshaped to have the same dimensions
+        of the y axis.
     """
     def __init__(self,
                  name: str = '_',
@@ -785,7 +870,7 @@ class QENSResult:
             See scipy.optimize.curve_fit for more info. The default is None.
         mesg : str, optional
             A string message giving information about the solution.
-            See scipy.optimize.curve_fit for more info.. The default is None.
+            See scipy.optimize.curve_fit for more info. The default is None.
         ier : int, optional
             An integer flag. If it is equal to 1, 2, 3 or 4, the solution
             was found. Otherwise, the solution was not found..
@@ -849,16 +934,16 @@ class QENSResult:
                                    self.residuals]):
             raise RuntimeError('Result incomplete, an argument was not passed')
 
-    def print_result(self, index = None, index_title = None):
+    def print_result(self, index: str = None, index_title: str = None):
         """
         Prints all the best fit parameters in a nice readable way, as a
         pandas.DataFrame. The index and its title can be customised.
 
         Parameters
         ----------
-        index : TYPE, optional
+        index : str, optional
             Index values for the DataFrame. The default is None.
-        index_title : TYPE, optional
+        index_title : str, optional
             Index title for the DataFrame. The default is None.
 
         Returns
@@ -881,13 +966,63 @@ class Model:
     and the input data in the form of a dictionary of ``QENSDataset``.
     A dictionary of ``QENSResult`` is generated when ``Model.run_fit()``
 
+    Attributes
+    ----------
+    target : callable
+        Target function to be used as a model to run the fit.
+    pnames : list
+        List of parameter names as inspected from the target function.
+    cnames : list
+        List of constant names as inspected from the target function.
+    ds : dict
+        Dictionary containing the input QENSDatasets.
+    constants : dict
+        Dictionary containing constants that need to be passed to the
+        fitting function (if any exists)
+    res : dict
+        Dictionary containing the output QENSResults.
+    n_ds : int
+        Number of Datasets used in the fit.
+    _par_cycler : SubplotCycler
+        Plot cycler object, which needs to be stored in memory for the
+        buttons to still work.
     """
     def __init__(self,
                  func: callable,
                  parlist: list,
                  datasets: dict = None,
                  **kwargs):
-        self.target = func #: Target function, i.e. the model to be fit to the data
+        """
+        Initialise the Model object.
+
+        Parameters
+        ----------
+        func : callable
+            Target function to be used as a model to run the fit.
+        parlist : list
+            List of Parameters. The order is not important, as the
+            constructor fuction will inspect the target function's signature,
+            and then reorder the Parameters passed in this list as
+            they appear in the target function. If a Parameter is missing
+            from this list while it is present in the target function,
+            an error will be raised.
+        datasets : dict, optional
+            Dictionary containing the input QENSDatasets. The default is None.
+        **kwargs : TYPE
+            Constants have to be passed as keyword arguments, so that they
+            can be interpreted as a dictionary.
+
+        Raises
+        ------
+        RuntimeError
+            An error is raised if no input data is provided.
+
+        Returns
+        -------
+        None.
+
+        """
+        self.target = func
         self.pnames = []
         self.cnames = []
         if datasets is None:
@@ -931,7 +1066,7 @@ class Model:
         result = np.zeros((data.n_q, len(x[0])))
         self.params.pack_values(par)
         for i in range(data.n_q):
-            params = tuple([self.params[key][i] for key in self.pnames])
+            params = (self.params[key][i] for key in self.pnames)
             constants = {'q': data.q[i]}
             for cname, cvalue in self.constants.items():
                 constants[cname] = (cvalue[i] if isinstance(cvalue, np.ndarray)
@@ -941,7 +1076,16 @@ class Model:
         return result.flatten()
 
     def run_fit(self):
-        with alive_bar(self.n_ds) as bar:
+        """
+        Method that runs the fit, generates the QENSResult objects,
+        and places them in a dictionary accessible as ``Model.res``.
+
+        Returns
+        -------
+        None.
+
+        """
+        with alive_bar(self.n_ds) as prog_bar:
             for key in self.ds:
                 self.ds[key].name = key
                 self.res[key] = QENSResult(name = self.ds[key].name)
@@ -980,13 +1124,37 @@ class Model:
                 self.res[key].validate_result()
                 self.res[key].print_result(index = self.ds[key].q,
                                        index_title = 'q')
-                bar()
+                prog_bar()
 
     def plot_fits(self,
-                  data_only = False,
+                  data_only:bool = False,
                   xlabel: str = 'E (meV)',
                   ylabel: str = 'Scattering Intensity (A.U.)',
                   **plt_kw):
+        """
+        Plots the input data and the fits together, with residuals,
+        in a single window which can be cycled through
+
+        Parameters
+        ----------
+        data_only : bool, optional
+            Lets the user decide if they want to only plot the input data,
+            or data and fit together. The default is False.
+        xlabel : str, optional
+            Label for the x axis. The default is 'E (meV)'.
+        ylabel : str, optional
+            Label for the y axis.
+            The default is 'Scattering Intensity (A.U.)'.
+        **plt_kw : TYPE
+            Keyword arguments passed to matplotlib.pyplot.errorbar (i.e.
+            formatting styles, etc.). Refer to the matplotlib documentation
+            for more details.
+
+        Returns
+        -------
+        None.
+
+        """
         for key in self.ds:
             fig, ax = plt.subplots(
                 2 if not data_only else 1 ,
@@ -1028,10 +1196,37 @@ class Model:
                 fig, ax) if self.ds[key].n_q > 1 else None
 
     def plot_par(self,
-                 index = 'q',
-                 x_title = r'$q\ (\AA^{-1})$',
-                 x_title_glob = r'$T\ (K)$',
+                 index: str = 'q',
+                 x_title: str = r'$q\ (\AA^{-1})$',
+                 x_title_glob: str = r'$T\ (K)$',
                  **pltpar_kw):
+        """
+        Plots the Parameter values, for both free and global
+        parameters separately.
+
+        Parameters
+        ----------
+        index : str, optional
+            Index to be used as the x axis to plot free parameters.
+            The default is 'q', but it can be another string corresponding
+            to any key in the constants dictionary (provided that it has
+            the same number of entries as the number of fitted curves).
+        x_title : str, optional
+            x axis label for the free parameters plot.
+            The default is r'$q\ (\AA^{-1})$'.
+        x_title_glob : str, optional
+            x axis label for the global parameters plot.
+            The default is r'$T\ (K)$'.
+        **pltpar_kw : TYPE
+            Keyword arguments passed to matplotlib.pyplot.errorbar (i.e.
+            formatting styles, etc.). Refer to the matplotlib documentation
+            for more details.
+
+        Returns
+        -------
+        None.
+
+        """
         glob_data = pd.DataFrame()
         fig_par, ax_par = plt.subplots(
             1,
@@ -1081,7 +1276,39 @@ class Model:
 
 def load_ascii(filename: str,
               sep: str = ',',
-              index_list: list = []):
+              index_list: list or str = 'temp') -> dict:
+    """
+    Loading function for Mantid data saved in ASCII format using SaveAscii.
+
+    Parameters
+    ----------
+    filename : str
+        File name to be searched in the current working directory.
+        Supports the use of wildcards and can open multiple files at once.
+    sep : str, optional
+        Separator in the text file. The default is ','.
+    index_list : list or str, optional
+        List of keys to index the data. If None, range(len(filenames))
+        is used. If list, the list is used (has to be the same length as
+        the number of files being opened). The default is 'temp', in which
+        case the temperature values will be inferred from the filenames,
+        and the values will be used as the keys for the output
+        dictionary.
+
+    Raises
+    ------
+    RuntimeError
+        Raises an error if: no files are found, the number of files is
+        bigger than the length of the index list, the temperature could
+        not be inferred from the file names.
+
+    Returns
+    -------
+    out_dict : dict
+        Dictionary containing the QENSDataset instances constructed from
+        the files' contents.
+
+    """
 
     print(f'Current Path: {os.getcwd()}')
 
@@ -1095,17 +1322,16 @@ def load_ascii(filename: str,
     out_dict = {}
 
     if index_list is None:
-        index_list = [i for i in range(len(names))]
+        index_list = list(range(len(names)))
         for i in index_list:
             name_dict[i] = names[i]
-    elif index_list != []:
+    elif isinstance(index_list, list):
         if len(index_list) != len(names):
             raise RuntimeError('Number of files found and length of index_list'
                                " don't match!")
-        else:
-            for i, index in enumerate(index_list):
-                name_dict[index] = names[i]
-    else:
+        for i, index in enumerate(index_list):
+            name_dict[index] = names[i]
+    elif index_list == 'temp':
         for i, name in enumerate(names):
             temp = re.findall(r'_(\d+\.\d+)K', name)
             if (len(temp) > 1) or (temp == []):
@@ -1147,6 +1373,7 @@ if __name__ == "__main__":
     plt.close('all')
 
     def fitmodel(x, /, a, omega, phi, *, q):
+        """Test fit function"""
         return a * np.sin(omega * x + phi) * np.exp(-x / q)
 
     lst = [Parameter('omega', [0.2, 0.6, 1.7], 0., 50.),
