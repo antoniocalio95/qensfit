@@ -824,6 +824,9 @@ class QENSResult:
     residuals : np.ndarray
         Residuals (infodict['fvec']) reshaped to have the same dimensions
         of the y axis.
+    cycler : SubplotCycler
+        Plot cycler object, which needs to be stored in memory for the
+        buttons to still work.
     """
     def __init__(self,
                  name: str = '_',
