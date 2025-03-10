@@ -4,19 +4,11 @@
 .. automodule:: qensfit
 
    
-   .. rubric:: Functions
+.. rubric:: Modules
 
-   .. autosummary::
-   
-      load_ascii
-   
-   .. rubric:: Classes
+.. autosummary::
+   :toctree:
+   :recursive:
 
-   .. autosummary::
-   
-      Model
-      ParList
-      Parameter
-      QENSDataset
-      QENSResult
-   
+   plotcycler
+   qensfit

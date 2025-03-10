@@ -1,0 +1,1219 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>qensfit.qensfit &mdash; QENSFit 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="qensfit.plotcycler" href="qensfit.plotcycler.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            QENSFit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home Page</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="qensfit.html">qensfit</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="qensfit.plotcycler.html">qensfit.plotcycler</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">qensfit.qensfit</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList"><code class="docutils literal notranslate"><span class="pre">ParList</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter"><code class="docutils literal notranslate"><span class="pre">Parameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSDataset"><code class="docutils literal notranslate"><span class="pre">QENSDataset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult"><code class="docutils literal notranslate"><span class="pre">QENSResult</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.load_ascii"><code class="docutils literal notranslate"><span class="pre">load_ascii()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">QENSFit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API</a></li>
+          <li class="breadcrumb-item"><a href="qensfit.html">qensfit</a></li>
+      <li class="breadcrumb-item active">qensfit.qensfit</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/qensfit.qensfit.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-qensfit.qensfit">
+<span id="qensfit-qensfit"></span><h1>qensfit.qensfit<a class="headerlink" href="#module-qensfit.qensfit" title="Link to this heading"></a></h1>
+<p>Main API module</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#qensfit.qensfit.load_ascii" title="qensfit.qensfit.load_ascii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_ascii</span></code></a>(filename[, sep, index_list])</p></td>
+<td><p>Loading function for Mantid data saved in ASCII format using SaveAscii.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#qensfit.qensfit.Model" title="qensfit.qensfit.Model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Model</span></code></a>(func, parlist[, datasets])</p></td>
+<td><p>Object which takes in the target fit function, a list of <code class="docutils literal notranslate"><span class="pre">Parameter</span></code>, and the input data in the form of a dictionary of <code class="docutils literal notranslate"><span class="pre">QENSDataset</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#qensfit.qensfit.ParList" title="qensfit.qensfit.ParList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParList</span></code></a>([parlist, curves])</p></td>
+<td><p>Parameter List object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#qensfit.qensfit.Parameter" title="qensfit.qensfit.Parameter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Parameter</span></code></a>(name, value_0[, low_bound, ...])</p></td>
+<td><p>Object that basicaly reimplements a float (with all its implicit methods) with added attributes to make it fit-compatible.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#qensfit.qensfit.QENSDataset" title="qensfit.qensfit.QENSDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QENSDataset</span></code></a>([name, x, y, dy, q])</p></td>
+<td><p>Dataset object which can be instantiated by itself, provided with suitable data, or it can be automatically created by the load_ascii function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#qensfit.qensfit.QENSResult" title="qensfit.qensfit.QENSResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QENSResult</span></code></a>([name, x, y, params, chisq, ...])</p></td>
+<td><p>Contains the results of the fit.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qensfit.qensfit.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Object which takes in the target fit function, a list of <code class="docutils literal notranslate"><span class="pre">Parameter</span></code>,
+and the input data in the form of a dictionary of <code class="docutils literal notranslate"><span class="pre">QENSDataset</span></code>.
+A dictionary of <code class="docutils literal notranslate"><span class="pre">QENSResult</span></code> is generated when <code class="docutils literal notranslate"><span class="pre">Model.run_fit()</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.target">
+<span class="sig-name descname"><span class="pre">target</span></span><a class="headerlink" href="#qensfit.qensfit.Model.target" title="Link to this definition"></a></dt>
+<dd><p>Target function to be used as a model to run the fit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.pnames">
+<span class="sig-name descname"><span class="pre">pnames</span></span><a class="headerlink" href="#qensfit.qensfit.Model.pnames" title="Link to this definition"></a></dt>
+<dd><p>List of parameter names as inspected from the target function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.cnames">
+<span class="sig-name descname"><span class="pre">cnames</span></span><a class="headerlink" href="#qensfit.qensfit.Model.cnames" title="Link to this definition"></a></dt>
+<dd><p>List of constant names as inspected from the target function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.ds">
+<span class="sig-name descname"><span class="pre">ds</span></span><a class="headerlink" href="#qensfit.qensfit.Model.ds" title="Link to this definition"></a></dt>
+<dd><p>Dictionary containing the input QENSDatasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.constants">
+<span class="sig-name descname"><span class="pre">constants</span></span><a class="headerlink" href="#qensfit.qensfit.Model.constants" title="Link to this definition"></a></dt>
+<dd><p>Dictionary containing constants that need to be passed to the
+fitting function (if any exists)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.res">
+<span class="sig-name descname"><span class="pre">res</span></span><a class="headerlink" href="#qensfit.qensfit.Model.res" title="Link to this definition"></a></dt>
+<dd><p>Dictionary containing the output QENSResults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.n_ds">
+<span class="sig-name descname"><span class="pre">n_ds</span></span><a class="headerlink" href="#qensfit.qensfit.Model.n_ds" title="Link to this definition"></a></dt>
+<dd><p>Number of Datasets used in the fit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model._par_cycler">
+<span class="sig-name descname"><span class="pre">_par_cycler</span></span><a class="headerlink" href="#qensfit.qensfit.Model._par_cycler" title="Link to this definition"></a></dt>
+<dd><p>Plot cycler object, which needs to be stored in memory for the
+buttons to still work.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="qensfit.plotcycler.html#qensfit.plotcycler.SubplotCycler" title="qensfit.plotcycler.SubplotCycler">SubplotCycler</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialise the Model object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>callable</em>) – Target function to be used as a model to run the fit.</p></li>
+<li><p><strong>parlist</strong> (<em>list</em>) – List of Parameters. The order is not important, as the
+constructor fuction will inspect the target function’s signature,
+and then reorder the Parameters passed in this list as
+they appear in the target function. If a Parameter is missing
+from this list while it is present in the target function,
+an error will be raised.</p></li>
+<li><p><strong>datasets</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary containing the input QENSDatasets. The default is None.</p></li>
+<li><p><strong>**kwargs</strong> (<em>TYPE</em>) – Constants have to be passed as keyword arguments, so that they
+can be interpreted as a dictionary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – An error is raised if no input data is provided.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.plot_fits">
+<span class="sig-name descname"><span class="pre">plot_fits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'E</span> <span class="pre">(meV)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Scattering</span> <span class="pre">Intensity</span> <span class="pre">(A.U.)'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plt_kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.plot_fits" title="Link to this definition"></a></dt>
+<dd><p>Plots the input data and the fits together, with residuals,
+in a single window which can be cycled through</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – Lets the user decide if they want to only plot the input data,
+or data and fit together. The default is False.</p></li>
+<li><p><strong>xlabel</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for the x axis. The default is ‘E (meV)’.</p></li>
+<li><p><strong>ylabel</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for the y axis.
+The default is ‘Scattering Intensity (A.U.)’.</p></li>
+<li><p><strong>**plt_kw</strong> (<em>TYPE</em>) – Keyword arguments passed to matplotlib.pyplot.errorbar (i.e.
+formatting styles, etc.). Refer to the matplotlib documentation
+for more details.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.plot_par">
+<span class="sig-name descname"><span class="pre">plot_par</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'$q\\</span> <span class="pre">(\\AA^{-1})$'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_title_glob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'$T\\</span> <span class="pre">(K)$'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">pltpar_kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.plot_par" title="Link to this definition"></a></dt>
+<dd><p>Plots the Parameter values, for both free and global
+parameters separately.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>str</em><em>, </em><em>optional</em>) – Index to be used as the x axis to plot free parameters.
+The default is ‘q’, but it can be another string corresponding
+to any key in the constants dictionary (provided that it has
+the same number of entries as the number of fitted curves).</p></li>
+<li><p><strong>x_title</strong> (<em>str</em><em>, </em><em>optional</em>) – x axis label for the free parameters plot.
+The default is r’$q(AA^{-1})$’.</p></li>
+<li><p><strong>x_title_glob</strong> (<em>str</em><em>, </em><em>optional</em>) – x axis label for the global parameters plot.
+The default is r’$T(K)$’.</p></li>
+<li><p><strong>**pltpar_kw</strong> (<em>TYPE</em>) – Keyword arguments passed to matplotlib.pyplot.errorbar (i.e.
+formatting styles, etc.). Refer to the matplotlib documentation
+for more details.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.run_fit">
+<span class="sig-name descname"><span class="pre">run_fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.run_fit" title="Link to this definition"></a></dt>
+<dd><p>Method that runs the fit, generates the QENSResult objects,
+and places them in a dictionary accessible as <code class="docutils literal notranslate"><span class="pre">Model.res</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qensfit.qensfit.</span></span><span class="sig-name descname"><span class="pre">ParList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.ParList" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parameter List object. Contains the Parameters in both list and dictionary
+formats, a list of parameter names, number of free, fixed or global
+parameters.</p>
+<p>The ParList object itself can be indexed both like an array
+(requires knowledge of the order of paramters), and like a dictionary
+(using parameter names as the key).</p>
+<p>All the pack and unpack functions shouldn’t be needed, as they’re only
+used when curve_fit is called, as it only accepts 1D inputs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.list">
+<span class="sig-name descname"><span class="pre">list</span></span><a class="headerlink" href="#qensfit.qensfit.ParList.list" title="Link to this definition"></a></dt>
+<dd><p>Contains the <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> objects in list form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of <a class="reference internal" href="#qensfit.qensfit.Parameter" title="qensfit.qensfit.Parameter">Parameter</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.n_curves">
+<span class="sig-name descname"><span class="pre">n_curves</span></span><a class="headerlink" href="#qensfit.qensfit.ParList.n_curves" title="Link to this definition"></a></dt>
+<dd><p>Number of curves to be fitted simultaneously by the <code class="docutils literal notranslate"><span class="pre">Model</span></code> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.dict">
+<span class="sig-name descname"><span class="pre">dict</span></span><a class="headerlink" href="#qensfit.qensfit.ParList.dict" title="Link to this definition"></a></dt>
+<dd><p>Contains the <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> objects in dictionary form.
+The keys are <code class="docutils literal notranslate"><span class="pre">Parameter.name</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.names">
+<span class="sig-name descname"><span class="pre">names</span></span><a class="headerlink" href="#qensfit.qensfit.ParList.names" title="Link to this definition"></a></dt>
+<dd><p>List containing the names of the Parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.n_free">
+<span class="sig-name descname"><span class="pre">n_free</span></span><a class="headerlink" href="#qensfit.qensfit.ParList.n_free" title="Link to this definition"></a></dt>
+<dd><p>Number of free Parameters that are being used in the fit (i.e.
+the Parameter has a different value for each fitted curve).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.n_fixed">
+<span class="sig-name descname"><span class="pre">n_fixed</span></span><a class="headerlink" href="#qensfit.qensfit.ParList.n_fixed" title="Link to this definition"></a></dt>
+<dd><p>Number of fixed Parameters that are being used in the fit (i.e.
+the Parameter has a value that is fixed to its initial value
+by the user).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.n_global">
+<span class="sig-name descname"><span class="pre">n_global</span></span><a class="headerlink" href="#qensfit.qensfit.ParList.n_global" title="Link to this definition"></a></dt>
+<dd><p>Number of global Parameters that are being used in the fit (i.e.
+the Parameter has the same value for all fitted curves, but it
+is allowed to change between the bounds).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.n_total">
+<span class="sig-name descname"><span class="pre">n_total</span></span><a class="headerlink" href="#qensfit.qensfit.ParList.n_total" title="Link to this definition"></a></dt>
+<dd><p>Total number of Parameters that are being used in the fit (i.e.
+n_curves * (n_free + n_fixed) + n_global).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.values">
+<span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#qensfit.qensfit.ParList.values" title="Link to this definition"></a></dt>
+<dd><p>1D array containing the values of all parameters.
+WARNING: Use only in conjunction with curve_fit.
+The proper way of getting a parameter value should be by using
+the dict or list, so that the name can be checked.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.errors">
+<span class="sig-name descname"><span class="pre">errors</span></span><a class="headerlink" href="#qensfit.qensfit.ParList.errors" title="Link to this definition"></a></dt>
+<dd><p>1D array containing the uncertainties of all parameters.
+WARNING: Use only in conjunction with curve_fit.
+The proper way of getting a parameter uncertainty should be
+by using the dict or list, so that the name can be checked.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.ParList.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the ParList instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parlist</strong> (<em>list</em><em>, </em><em>optional</em>) – List containing the Parameter objects to add. The default is None.</p></li>
+<li><p><strong>curves</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of curves to be fitted simultaneously using those
+parameters. The default is 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.add_par">
+<span class="sig-name descname"><span class="pre">add_par</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.ParList.add_par" title="Link to this definition"></a></dt>
+<dd><p>Adds a parameter to the ParList instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>par</strong> (<em>TYPE</em>) – Parameter object to be added (required).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.all_to_df">
+<span class="sig-name descname"><span class="pre">all_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#qensfit.qensfit.ParList.all_to_df" title="Link to this definition"></a></dt>
+<dd><p>Returns a pandas.DataFrame containing the values and uncertainties
+for all the parameters (free and global).
+The index and its title can be customised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – Index values for the DataFrame. The default is None.</p></li>
+<li><p><strong>index_title</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – Index title for the DataFrame. The default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>df</strong> – DataFrame containing the values and uncertainties
+for all the parameters (free and global) as columns.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.all_to_df_noerr">
+<span class="sig-name descname"><span class="pre">all_to_df_noerr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#qensfit.qensfit.ParList.all_to_df_noerr" title="Link to this definition"></a></dt>
+<dd><p>Returns a pandas.DataFrame containing the values
+for all the parameters (free and global).
+No uncertainties are provided!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> – DataFrame containing the values
+for all the parameters (free and global) as columns.
+No uncertainties are provided!</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.free_to_df">
+<span class="sig-name descname"><span class="pre">free_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#qensfit.qensfit.ParList.free_to_df" title="Link to this definition"></a></dt>
+<dd><p>Returns a pandas.DataFrame containing the values and uncertainties
+for all the free parameters.
+The index and its title can be customised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – Index values for the DataFrame. The default is None.</p></li>
+<li><p><strong>index_title</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – Index title for the DataFrame. The default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>df</strong> – DataFrame containing the values and uncertainties
+for all the free parameters as columns.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.global_to_df">
+<span class="sig-name descname"><span class="pre">global_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#qensfit.qensfit.ParList.global_to_df" title="Link to this definition"></a></dt>
+<dd><p>Returns a pandas.DataFrame containing the values and uncertainties
+for the global parameters. This will have different dimensions than
+the DataFrame returned by all_to_df() or free_to_df(), as each global
+parameter will correspond to multiple curves.
+The index and its title can be customised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – Index values for the DataFrame. The default is [1].</p></li>
+<li><p><strong>index_title</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – Index title for the DataFrame. The default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>df</strong> – DataFrame containing the values and uncertainties
+for the global parameters as columns.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.pack_errors">
+<span class="sig-name descname"><span class="pre">pack_errors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.ParList.pack_errors" title="Link to this definition"></a></dt>
+<dd><p>Packs the provided uncertaintiesinto the Parameter objects
+into the ParList.
+WARNING: don’t use if you don’t know EXACTLY the order of the
+parameters!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vector</strong> (<em>numpy.ndarray</em>) – Array containing the uncertainties to be packed.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.pack_values">
+<span class="sig-name descname"><span class="pre">pack_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.ParList.pack_values" title="Link to this definition"></a></dt>
+<dd><p>Packs the provided values into the Parameter objects into the ParList.
+WARNING: don’t use if you don’t know EXACTLY the order of the
+parameters!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vector</strong> (<em>numpy.ndarray</em>) – Array containing the values to be packed.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.unpack_bounds">
+<span class="sig-name descname"><span class="pre">unpack_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">(&lt;class</span> <span class="pre">'numpy.ndarray'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'numpy.ndarray'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.ParList.unpack_bounds" title="Link to this definition"></a></dt>
+<dd><p>Unpacks the bounds of all the parameters,
+and stores them in a tuple of two 1D numpy.ndarray</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – The bounds must be int or float (for global parameters),
+    list or numpy.ndarray (for free parameters).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of two 1D arrays containing the upper and lower bounds.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(numpy.ndarray, numpy.ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.unpack_errors">
+<span class="sig-name descname"><span class="pre">unpack_errors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qensfit.qensfit.ParList.unpack_errors" title="Link to this definition"></a></dt>
+<dd><p>Unpacks the uncertainties of all the parameters,
+and stores them in a 1D numpy.ndarray. If no fitting has been
+attempted yet, all values will be None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1D array containing all the uncertainties values.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.unpack_pin">
+<span class="sig-name descname"><span class="pre">unpack_pin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qensfit.qensfit.ParList.unpack_pin" title="Link to this definition"></a></dt>
+<dd><p>Unpacks the initial values of all the parameters,
+and stores them in a 1D numpy.ndarray</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – The initial value must be int or float (for global parameters),
+    list or numpy.ndarray (for free parameters).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>1D array containing all the initial values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.ParList.unpack_values">
+<span class="sig-name descname"><span class="pre">unpack_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qensfit.qensfit.ParList.unpack_values" title="Link to this definition"></a></dt>
+<dd><p>Unpacks the values of all the parameters,
+and stores them in a 1D numpy.ndarray. If no fitting has been
+attempted yet, all values will be equal to the initial values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1D array containing all the parameter values.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qensfit.qensfit.</span></span><span class="sig-name descname"><span class="pre">Parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_bound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high_bound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fixed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_global</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Parameter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Object that basicaly reimplements a float (with all its implicit
+methods) with added attributes to make it fit-compatible. That is,
+all the operations are defined to be applied on Parameter.value.
+Moreover, it supports indexing when the value is an array-like.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#qensfit.qensfit.Parameter.name" title="Link to this definition"></a></dt>
+<dd><p>Name of the <code class="docutils literal notranslate"><span class="pre">Parameter</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter.ax_name">
+<span class="sig-name descname"><span class="pre">ax_name</span></span><a class="headerlink" href="#qensfit.qensfit.Parameter.ax_name" title="Link to this definition"></a></dt>
+<dd><p>Y axis label when the parameter is plotted. If None, <code class="docutils literal notranslate"><span class="pre">name</span></code> is used</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter.ini">
+<span class="sig-name descname"><span class="pre">ini</span></span><a class="headerlink" href="#qensfit.qensfit.Parameter.ini" title="Link to this definition"></a></dt>
+<dd><p>Initial value(s) of the <code class="docutils literal notranslate"><span class="pre">Parameter</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or list or np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter.low">
+<span class="sig-name descname"><span class="pre">low</span></span><a class="headerlink" href="#qensfit.qensfit.Parameter.low" title="Link to this definition"></a></dt>
+<dd><p>Lower bound(s) of the <code class="docutils literal notranslate"><span class="pre">Parameter</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or list or np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter.high">
+<span class="sig-name descname"><span class="pre">high</span></span><a class="headerlink" href="#qensfit.qensfit.Parameter.high" title="Link to this definition"></a></dt>
+<dd><p>Upper bound(s) of the <code class="docutils literal notranslate"><span class="pre">Parameter</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or list or np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter.is_fixed">
+<span class="sig-name descname"><span class="pre">is_fixed</span></span><a class="headerlink" href="#qensfit.qensfit.Parameter.is_fixed" title="Link to this definition"></a></dt>
+<dd><p>Whether the <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> is constrained to <code class="docutils literal notranslate"><span class="pre">ini</span></code> during the
+fitting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter.is_global">
+<span class="sig-name descname"><span class="pre">is_global</span></span><a class="headerlink" href="#qensfit.qensfit.Parameter.is_global" title="Link to this definition"></a></dt>
+<dd><p>Whether the <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> is global or not, i.e. the same value
+will be shared to fit multiple curves.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter.is_free">
+<span class="sig-name descname"><span class="pre">is_free</span></span><a class="headerlink" href="#qensfit.qensfit.Parameter.is_free" title="Link to this definition"></a></dt>
+<dd><p>Whether the <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> is free, i.e. not fixed and not global.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter.value">
+<span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#qensfit.qensfit.Parameter.value" title="Link to this definition"></a></dt>
+<dd><p>Value(s) of the <code class="docutils literal notranslate"><span class="pre">Parameter</span></code>. It changes during the fitting
+procedure, and will be equal to the best fit value after
+it has converged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter.error">
+<span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#qensfit.qensfit.Parameter.error" title="Link to this definition"></a></dt>
+<dd><p>Uncertainty(ies) on the <code class="docutils literal notranslate"><span class="pre">Parameter.value</span></code>. It is calculated as
+<code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">*</span> <span class="pre">sqrt(diag(cov))</span></code> where <code class="docutils literal notranslate"><span class="pre">cov</span></code> is the covariance matrix
+returned by <code class="docutils literal notranslate"><span class="pre">curve_fit</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.Parameter.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_bound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high_bound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fixed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_global</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Parameter.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialises the Parameter instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the parameter.</p></li>
+<li><p><strong>value_0</strong> (<em>float</em><em> or </em><em>list</em><em> or </em><em>np.ndarray</em>) – Initial value.</p></li>
+<li><p><strong>low_bound</strong> (<em>float</em><em> or </em><em>list</em><em> or </em><em>np.ndarray</em><em>, </em><em>optional</em>) – Lower bound. The default is None, which will imply an
+unbounded parameter</p></li>
+<li><p><strong>high_bound</strong> (<em>float</em><em> or </em><em>list</em><em> or </em><em>np.ndarray</em><em>, </em><em>optional</em>) – Upper bound. The default is None, which will imply an
+unbounded parameter</p></li>
+<li><p><strong>is_fixed</strong> (<em>bool</em><em>, </em><em>optional</em>) – Used to fix a parameter. The default is False.</p></li>
+<li><p><strong>is_global</strong> (<em>bool</em><em>, </em><em>optional</em>) – Used to make a parameter global. The default is False.</p></li>
+<li><p><strong>ax_name</strong> (<em>str</em><em>, </em><em>optional</em>) – String that will appear as axis label when the parameter is
+plotted, supports LaTeX. The default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qensfit.qensfit.</span></span><span class="sig-name descname"><span class="pre">QENSDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.QENSDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Dataset object which can be instantiated by itself, provided with
+suitable data, or it can be automatically created by the load_ascii
+function. Data is checked automatically for dimension mismatches.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSDataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#qensfit.qensfit.QENSDataset.name" title="Link to this definition"></a></dt>
+<dd><p>Dataset name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSDataset.x">
+<span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#qensfit.qensfit.QENSDataset.x" title="Link to this definition"></a></dt>
+<dd><p>Dataset x axis, i.e. the Energy axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSDataset.y">
+<span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#qensfit.qensfit.QENSDataset.y" title="Link to this definition"></a></dt>
+<dd><p>Dataset y axis, i.e. the Scattering Intensity axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSDataset.dy">
+<span class="sig-name descname"><span class="pre">dy</span></span><a class="headerlink" href="#qensfit.qensfit.QENSDataset.dy" title="Link to this definition"></a></dt>
+<dd><p>Dataset dy axis, i.e. the Errors axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSDataset.q">
+<span class="sig-name descname"><span class="pre">q</span></span><a class="headerlink" href="#qensfit.qensfit.QENSDataset.q" title="Link to this definition"></a></dt>
+<dd><p>Dataset q axis, i.e. the Momentum Transfer axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSDataset.n_q">
+<span class="sig-name descname"><span class="pre">n_q</span></span><a class="headerlink" href="#qensfit.qensfit.QENSDataset.n_q" title="Link to this definition"></a></dt>
+<dd><p>Number of spectra, i.e. number of q points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSDataset.n_e">
+<span class="sig-name descname"><span class="pre">n_e</span></span><a class="headerlink" href="#qensfit.qensfit.QENSDataset.n_e" title="Link to this definition"></a></dt>
+<dd><p>Number of energy values, i.e. number of bins in the spectra.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.QENSDataset.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialise the QENSDataset instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Dataset name. The default is ‘_’.</p></li>
+<li><p><strong>x</strong> (<em>list</em><em> or </em><em>np.ndarray</em><em>, </em><em>optional</em>) – Dataset x axis, i.e. the Energy axis.
+Has to have the same dimensions as y and dy.
+The default is None.</p></li>
+<li><p><strong>y</strong> (<em>list</em><em> or </em><em>np.ndarray</em><em>, </em><em>optional</em>) – Dataset y axis, i.e. the Scattering Intensity axis.
+Has to have the same dimensions as x and dy.
+The default is None.</p></li>
+<li><p><strong>dy</strong> (<em>list</em><em> or </em><em>np.ndarray</em><em>, </em><em>optional</em>) – Dataset dy axis, i.e. the Errors axis.
+Has to have the same dimensions as x and yy.
+The default is None.</p></li>
+<li><p><strong>q</strong> (<em>list</em><em> or </em><em>np.ndarray</em><em>, </em><em>optional</em>) – Dataset q axis, i.e. the Momentum Transfer axis.
+If x, y and dy have dimensions (N, M), then
+q has to be 1D and of length N.
+The default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qensfit.qensfit.</span></span><span class="sig-name descname"><span class="pre">QENSResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qensfit.qensfit.ParList" title="qensfit.qensfit.ParList"><span class="pre">ParList</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chisq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">popt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pcov</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infodict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">residuals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.QENSResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contains the results of the fit. It is instantiated bu Model.run_fit()
+when a dataset is fitted.
+WARNING: If this object is used outside its intended scope,
+the validate_result() method has to be called by hand!</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#qensfit.qensfit.QENSResult.name" title="Link to this definition"></a></dt>
+<dd><p>Result name. Usually the same as the QENSDataset it refers to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.x">
+<span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#qensfit.qensfit.QENSResult.x" title="Link to this definition"></a></dt>
+<dd><p>Result x axis. This array is denser than the input data (i.e.
+QENSDataset.x) to make the plots look smoother.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.y">
+<span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#qensfit.qensfit.QENSResult.y" title="Link to this definition"></a></dt>
+<dd><p>Result y axis, i.e. the model function evaluated at the best fit
+parameter values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.params">
+<span class="sig-name descname"><span class="pre">params</span></span><a class="headerlink" href="#qensfit.qensfit.QENSResult.params" title="Link to this definition"></a></dt>
+<dd><p>ParList instance containing the best fit parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qensfit.qensfit.ParList" title="qensfit.qensfit.ParList">ParList</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.chisq">
+<span class="sig-name descname"><span class="pre">chisq</span></span><a class="headerlink" href="#qensfit.qensfit.QENSResult.chisq" title="Link to this definition"></a></dt>
+<dd><p>Chi squared value for the global fit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.popt">
+<span class="sig-name descname"><span class="pre">popt</span></span><a class="headerlink" href="#qensfit.qensfit.QENSResult.popt" title="Link to this definition"></a></dt>
+<dd><p>1D vector containing the values of the best fit parameters.
+See scipy.optimize.curve_fit for more info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.pcov">
+<span class="sig-name descname"><span class="pre">pcov</span></span><a class="headerlink" href="#qensfit.qensfit.QENSResult.pcov" title="Link to this definition"></a></dt>
+<dd><p>2D vector containing approximate covariance of popt.
+See scipy.optimize.curve_fit for more info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.infodict">
+<span class="sig-name descname"><span class="pre">infodict</span></span><a class="headerlink" href="#qensfit.qensfit.QENSResult.infodict" title="Link to this definition"></a></dt>
+<dd><p>Dictionary containing the keys ‘nfev’ (number of function
+evaluations) and ‘fvec’ (Residuals evaluated at the solution
+in a 1D array). See scipy.optimize.curve_fit for more info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.mesg">
+<span class="sig-name descname"><span class="pre">mesg</span></span><a class="headerlink" href="#qensfit.qensfit.QENSResult.mesg" title="Link to this definition"></a></dt>
+<dd><p>A string message giving information about the solution.
+See scipy.optimize.curve_fit for more info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.ier">
+<span class="sig-name descname"><span class="pre">ier</span></span><a class="headerlink" href="#qensfit.qensfit.QENSResult.ier" title="Link to this definition"></a></dt>
+<dd><p>An integer flag. If it is equal to 1, 2, 3 or 4, the solution
+was found. Otherwise, the solution was not found..
+See scipy.optimize.curve_fit for more info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.residuals">
+<span class="sig-name descname"><span class="pre">residuals</span></span><a class="headerlink" href="#qensfit.qensfit.QENSResult.residuals" title="Link to this definition"></a></dt>
+<dd><p>Residuals (infodict[‘fvec’]) reshaped to have the same dimensions
+of the y axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qensfit.qensfit.ParList" title="qensfit.qensfit.ParList"><span class="pre">ParList</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chisq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">popt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pcov</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infodict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">residuals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.QENSResult.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialise the QENSResult instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Result name. Usually the same as the QENSDataset it refers to.
+The default is ‘_’.</p></li>
+<li><p><strong>x</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Result x axis. This array is denser than the input data (i.e.
+QENSDataset.x) to make the plots look smoother.
+The default is None.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Result y axis, i.e. the model function evaluated at the best fit
+parameter values. The default is None.</p></li>
+<li><p><strong>params</strong> (<a class="reference internal" href="#qensfit.qensfit.ParList" title="qensfit.qensfit.ParList"><em>ParList</em></a><em>, </em><em>optional</em>) – ParList instance containing the best fit parameters.
+The default is None.</p></li>
+<li><p><strong>chisq</strong> (<em>float</em><em>, </em><em>optional</em>) – Chi squared value for the global fit. The default is None.</p></li>
+<li><p><strong>popt</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – 1D vector containing the values of the best fit parameters.
+See scipy.optimize.curve_fit for more info. The default is None.</p></li>
+<li><p><strong>pcov</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – 2D vector containing approximate covariance of popt.
+See scipy.optimize.curve_fit for more info. The default is None.</p></li>
+<li><p><strong>infodict</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary containing the keys ‘nfev’ (number of function
+evaluations) and ‘fvec’ (Residuals evaluated at the solution
+in a 1D array).
+See scipy.optimize.curve_fit for more info. The default is None.</p></li>
+<li><p><strong>mesg</strong> (<em>str</em><em>, </em><em>optional</em>) – A string message giving information about the solution.
+See scipy.optimize.curve_fit for more info. The default is None.</p></li>
+<li><p><strong>ier</strong> (<em>int</em><em>, </em><em>optional</em>) – An integer flag. If it is equal to 1, 2, 3 or 4, the solution
+was found. Otherwise, the solution was not found..
+See scipy.optimize.curve_fit for more info. The default is None.</p></li>
+<li><p><strong>residuals</strong> (<em>np.ndarray</em><em>, </em><em>optional</em>) – Residuals (infodict[‘fvec’]) reshaped to have the same dimensions
+of the y axis. The default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.print_result">
+<span class="sig-name descname"><span class="pre">print_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.QENSResult.print_result" title="Link to this definition"></a></dt>
+<dd><p>Prints all the best fit parameters in a nice readable way, as a
+pandas.DataFrame. The index and its title can be customised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>str</em><em>, </em><em>optional</em>) – Index values for the DataFrame. The default is None.</p></li>
+<li><p><strong>index_title</strong> (<em>str</em><em>, </em><em>optional</em>) – Index title for the DataFrame. The default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.QENSResult.validate_result">
+<span class="sig-name descname"><span class="pre">validate_result</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.QENSResult.validate_result" title="Link to this definition"></a></dt>
+<dd><p>Checks if all the arguments have been passed properly to the Result
+instance after the fit has been run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If any argument for QENSResult is None, an error is raised.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qensfit.qensfit.load_ascii">
+<span class="sig-prename descclassname"><span class="pre">qensfit.qensfit.</span></span><span class="sig-name descname"><span class="pre">load_ascii</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'temp'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#qensfit.qensfit.load_ascii" title="Link to this definition"></a></dt>
+<dd><p>Loading function for Mantid data saved in ASCII format using SaveAscii.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – File name to be searched in the current working directory.
+Supports the use of wildcards and can open multiple files at once.</p></li>
+<li><p><strong>sep</strong> (<em>str</em><em>, </em><em>optional</em>) – Separator in the text file. The default is ‘,’.</p></li>
+<li><p><strong>index_list</strong> (<em>list</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – List of keys to index the data. If None, range(len(filenames))
+is used. If list, the list is used (has to be the same length as
+the number of files being opened). The default is ‘temp’, in which
+case the temperature values will be inferred from the filenames,
+and the values will be used as the keys for the output
+dictionary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Raises an error if: no files are found, the number of files is
+    bigger than the length of the index list, the temperature could
+    not be inferred from the file names.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>out_dict</strong> – Dictionary containing the QENSDataset instances constructed from
+the files’ contents.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="qensfit.plotcycler.html" class="btn btn-neutral float-left" title="qensfit.plotcycler" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Antonino Caliò.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

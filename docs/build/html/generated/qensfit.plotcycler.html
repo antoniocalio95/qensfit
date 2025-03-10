@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>plotcycler &mdash; QENSFit 0.0.1 documentation</title>
+  <title>qensfit.plotcycler &mdash; QENSFit 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
@@ -19,6 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="qensfit.qensfit" href="qensfit.qensfit.html" />
     <link rel="prev" title="qensfit" href="qensfit.html" /> 
 </head>
 
@@ -46,17 +47,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Home Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="qensfit.html">qensfit</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">plotcycler</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#plotcycler.SubplotCycler"><code class="docutils literal notranslate"><span class="pre">SubplotCycler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#plotcycler.SubplotCycler.__init__"><code class="docutils literal notranslate"><span class="pre">SubplotCycler.__init__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plotcycler.SubplotCycler.next_subplot"><code class="docutils literal notranslate"><span class="pre">SubplotCycler.next_subplot()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plotcycler.SubplotCycler.prev_subplot"><code class="docutils literal notranslate"><span class="pre">SubplotCycler.prev_subplot()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plotcycler.SubplotCycler.save"><code class="docutils literal notranslate"><span class="pre">SubplotCycler.save()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plotcycler.SubplotCycler.save_all"><code class="docutils literal notranslate"><span class="pre">SubplotCycler.save_all()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plotcycler.SubplotCycler.show_subplot"><code class="docutils literal notranslate"><span class="pre">SubplotCycler.show_subplot()</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="qensfit.html">qensfit</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">qensfit.plotcycler</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.plotcycler.SubplotCycler"><code class="docutils literal notranslate"><span class="pre">SubplotCycler</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="qensfit.qensfit.html">qensfit.qensfit</a></li>
 </ul>
 </li>
 </ul>
@@ -78,9 +74,10 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../api.html">API</a></li>
-      <li class="breadcrumb-item active">plotcycler</li>
+          <li class="breadcrumb-item"><a href="qensfit.html">qensfit</a></li>
+      <li class="breadcrumb-item active">qensfit.plotcycler</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/generated/plotcycler.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/qensfit.plotcycler.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -88,28 +85,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-plotcycler">
-<span id="plotcycler"></span><h1>plotcycler<a class="headerlink" href="#module-plotcycler" title="Link to this heading"></a></h1>
+  <section id="module-qensfit.plotcycler">
+<span id="qensfit-plotcycler"></span><h1>qensfit.plotcycler<a class="headerlink" href="#module-qensfit.plotcycler" title="Link to this heading"></a></h1>
 <p>Module containing the SubplotCycler Class, a utility to plot datasets
 containing multiple curves in a single window, cycle through them
 using buttons, and save the figures.</p>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#plotcycler.SubplotCycler" title="plotcycler.SubplotCycler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubplotCycler</span></code></a>(figure, axes[, simultaneous_plots])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#qensfit.plotcycler.SubplotCycler" title="qensfit.plotcycler.SubplotCycler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SubplotCycler</span></code></a>(figure, axes[, simultaneous_plots])</p></td>
 <td><p>Create an object that permits to cycle between graphs on the same window.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py class">
-<dt class="sig sig-object py" id="plotcycler.SubplotCycler">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plotcycler.</span></span><span class="sig-name descname"><span class="pre">SubplotCycler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Figure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simultaneous_plots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plotcycler.SubplotCycler" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="qensfit.plotcycler.SubplotCycler">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qensfit.plotcycler.</span></span><span class="sig-name descname"><span class="pre">SubplotCycler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Figure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simultaneous_plots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.plotcycler.SubplotCycler" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Create an object that permits to cycle between graphs on the same window.
 Supports plots with multiple rows as well.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="plotcycler.SubplotCycler.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Figure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simultaneous_plots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plotcycler.SubplotCycler.__init__" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="qensfit.plotcycler.SubplotCycler.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Figure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simultaneous_plots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.plotcycler.SubplotCycler.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialises the cycler object by passing it the figure and the
 axes on which it has to act, and the number of plots that the
 user wishes to show simultaneously</p>
@@ -141,32 +138,32 @@ on multiple rows to make them fit in the same window.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="plotcycler.SubplotCycler.next_subplot">
-<span class="sig-name descname"><span class="pre">next_subplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plotcycler.SubplotCycler.next_subplot" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="qensfit.plotcycler.SubplotCycler.next_subplot">
+<span class="sig-name descname"><span class="pre">next_subplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.plotcycler.SubplotCycler.next_subplot" title="Link to this definition"></a></dt>
 <dd><p>Switches to the next group of subplots when the buton is clicked</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="plotcycler.SubplotCycler.prev_subplot">
-<span class="sig-name descname"><span class="pre">prev_subplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plotcycler.SubplotCycler.prev_subplot" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="qensfit.plotcycler.SubplotCycler.prev_subplot">
+<span class="sig-name descname"><span class="pre">prev_subplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.plotcycler.SubplotCycler.prev_subplot" title="Link to this definition"></a></dt>
 <dd><p>Switches to the previous group of subplots when the buton is clicked</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="plotcycler.SubplotCycler.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plotcycler.SubplotCycler.save" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="qensfit.plotcycler.SubplotCycler.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.plotcycler.SubplotCycler.save" title="Link to this definition"></a></dt>
 <dd><p>Saves current figure in png format when the buton is clicked</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="plotcycler.SubplotCycler.save_all">
-<span class="sig-name descname"><span class="pre">save_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plotcycler.SubplotCycler.save_all" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="qensfit.plotcycler.SubplotCycler.save_all">
+<span class="sig-name descname"><span class="pre">save_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.plotcycler.SubplotCycler.save_all" title="Link to this definition"></a></dt>
 <dd><p>Saves all figures in png format when the buton is clicked</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="plotcycler.SubplotCycler.show_subplot">
-<span class="sig-name descname"><span class="pre">show_subplot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#plotcycler.SubplotCycler.show_subplot" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="qensfit.plotcycler.SubplotCycler.show_subplot">
+<span class="sig-name descname"><span class="pre">show_subplot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.plotcycler.SubplotCycler.show_subplot" title="Link to this definition"></a></dt>
 <dd><p>Show the current subplots and adjust their positions dynamically
 to fill the figure</p>
 </dd></dl>
@@ -180,6 +177,7 @@ to fill the figure</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="qensfit.html" class="btn btn-neutral float-left" title="qensfit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="qensfit.qensfit.html" class="btn btn-neutral float-right" title="qensfit.qensfit" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

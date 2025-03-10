@@ -1,7 +1,7 @@
-﻿plotcycler
-==========
+qensfit.plotcycler
+==================
 
-.. automodule:: plotcycler
+.. automodule:: qensfit.plotcycler
 
    
    .. rubric:: Classes
