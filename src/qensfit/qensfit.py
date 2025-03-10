@@ -15,7 +15,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 from alive_progress import alive_bar
-from plotcycler import SubplotCycler
+from qensfit.plotcycler import SubplotCycler
 
 class Parameter:
     """
