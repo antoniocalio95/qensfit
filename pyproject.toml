@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qensfit"
+version = "0.0.1"
+description = "A library for fitting Quasielastic Neutron Scattering data."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Antonino Caliò", email = "antoniocalio95@gmail.com" }]
+dependencies = [
+    "numpy",
+    "scipy",
+    "pandas",
+    "matplotlib",
+    "alive_progress"
+]
+
+[project.urls]
+Homepage = "https://github.com/antoniocalio95/qensfit"
+Documentation = "https://qensfit.readthedocs.io/"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
