@@ -1,4 +1,4 @@
-qensfit.qensfit
+﻿qensfit.qensfit
 ===============
 
 .. automodule:: qensfit.qensfit

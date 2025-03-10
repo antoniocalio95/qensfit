@@ -19,7 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="qensfit.plotcycler" href="qensfit.plotcycler.html" /> 
+    <link rel="next" title="qensfit.plotcycler" href="qensfit.plotcycler.html" />
+    <link rel="prev" title="API" href="../api.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,19 +47,93 @@
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Home Page</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="qensfit.html">qensfit</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="qensfit.plotcycler.html">qensfit.plotcycler</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">qensfit.qensfit</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList"><code class="docutils literal notranslate"><span class="pre">ParList</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter"><code class="docutils literal notranslate"><span class="pre">Parameter</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSDataset"><code class="docutils literal notranslate"><span class="pre">QENSDataset</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult"><code class="docutils literal notranslate"><span class="pre">QENSResult</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.load_ascii"><code class="docutils literal notranslate"><span class="pre">load_ascii()</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">qensfit.qensfit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qensfit.qensfit.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.target"><code class="docutils literal notranslate"><span class="pre">Model.target</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.pnames"><code class="docutils literal notranslate"><span class="pre">Model.pnames</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.cnames"><code class="docutils literal notranslate"><span class="pre">Model.cnames</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.ds"><code class="docutils literal notranslate"><span class="pre">Model.ds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.constants"><code class="docutils literal notranslate"><span class="pre">Model.constants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.res"><code class="docutils literal notranslate"><span class="pre">Model.res</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.n_ds"><code class="docutils literal notranslate"><span class="pre">Model.n_ds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model._par_cycler"><code class="docutils literal notranslate"><span class="pre">Model._par_cycler</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.__init__"><code class="docutils literal notranslate"><span class="pre">Model.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.plot_fits"><code class="docutils literal notranslate"><span class="pre">Model.plot_fits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.plot_par"><code class="docutils literal notranslate"><span class="pre">Model.plot_par()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.run_fit"><code class="docutils literal notranslate"><span class="pre">Model.run_fit()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#qensfit.qensfit.ParList"><code class="docutils literal notranslate"><span class="pre">ParList</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.list"><code class="docutils literal notranslate"><span class="pre">ParList.list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.n_curves"><code class="docutils literal notranslate"><span class="pre">ParList.n_curves</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.dict"><code class="docutils literal notranslate"><span class="pre">ParList.dict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.names"><code class="docutils literal notranslate"><span class="pre">ParList.names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.n_free"><code class="docutils literal notranslate"><span class="pre">ParList.n_free</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.n_fixed"><code class="docutils literal notranslate"><span class="pre">ParList.n_fixed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.n_global"><code class="docutils literal notranslate"><span class="pre">ParList.n_global</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.n_total"><code class="docutils literal notranslate"><span class="pre">ParList.n_total</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.values"><code class="docutils literal notranslate"><span class="pre">ParList.values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.errors"><code class="docutils literal notranslate"><span class="pre">ParList.errors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.__init__"><code class="docutils literal notranslate"><span class="pre">ParList.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.add_par"><code class="docutils literal notranslate"><span class="pre">ParList.add_par()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.all_to_df"><code class="docutils literal notranslate"><span class="pre">ParList.all_to_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.all_to_df_noerr"><code class="docutils literal notranslate"><span class="pre">ParList.all_to_df_noerr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.free_to_df"><code class="docutils literal notranslate"><span class="pre">ParList.free_to_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.global_to_df"><code class="docutils literal notranslate"><span class="pre">ParList.global_to_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.pack_errors"><code class="docutils literal notranslate"><span class="pre">ParList.pack_errors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.pack_values"><code class="docutils literal notranslate"><span class="pre">ParList.pack_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.unpack_bounds"><code class="docutils literal notranslate"><span class="pre">ParList.unpack_bounds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.unpack_errors"><code class="docutils literal notranslate"><span class="pre">ParList.unpack_errors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.unpack_pin"><code class="docutils literal notranslate"><span class="pre">ParList.unpack_pin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.ParList.unpack_values"><code class="docutils literal notranslate"><span class="pre">ParList.unpack_values()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#qensfit.qensfit.Parameter"><code class="docutils literal notranslate"><span class="pre">Parameter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter.name"><code class="docutils literal notranslate"><span class="pre">Parameter.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter.ax_name"><code class="docutils literal notranslate"><span class="pre">Parameter.ax_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter.ini"><code class="docutils literal notranslate"><span class="pre">Parameter.ini</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter.low"><code class="docutils literal notranslate"><span class="pre">Parameter.low</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter.high"><code class="docutils literal notranslate"><span class="pre">Parameter.high</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter.is_fixed"><code class="docutils literal notranslate"><span class="pre">Parameter.is_fixed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter.is_global"><code class="docutils literal notranslate"><span class="pre">Parameter.is_global</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter.is_free"><code class="docutils literal notranslate"><span class="pre">Parameter.is_free</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter.value"><code class="docutils literal notranslate"><span class="pre">Parameter.value</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter.error"><code class="docutils literal notranslate"><span class="pre">Parameter.error</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Parameter.__init__"><code class="docutils literal notranslate"><span class="pre">Parameter.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#qensfit.qensfit.QENSDataset"><code class="docutils literal notranslate"><span class="pre">QENSDataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSDataset.name"><code class="docutils literal notranslate"><span class="pre">QENSDataset.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSDataset.x"><code class="docutils literal notranslate"><span class="pre">QENSDataset.x</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSDataset.y"><code class="docutils literal notranslate"><span class="pre">QENSDataset.y</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSDataset.dy"><code class="docutils literal notranslate"><span class="pre">QENSDataset.dy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSDataset.q"><code class="docutils literal notranslate"><span class="pre">QENSDataset.q</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSDataset.n_q"><code class="docutils literal notranslate"><span class="pre">QENSDataset.n_q</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSDataset.n_e"><code class="docutils literal notranslate"><span class="pre">QENSDataset.n_e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSDataset.__init__"><code class="docutils literal notranslate"><span class="pre">QENSDataset.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#qensfit.qensfit.QENSResult"><code class="docutils literal notranslate"><span class="pre">QENSResult</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.name"><code class="docutils literal notranslate"><span class="pre">QENSResult.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.x"><code class="docutils literal notranslate"><span class="pre">QENSResult.x</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.y"><code class="docutils literal notranslate"><span class="pre">QENSResult.y</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.params"><code class="docutils literal notranslate"><span class="pre">QENSResult.params</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.chisq"><code class="docutils literal notranslate"><span class="pre">QENSResult.chisq</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.popt"><code class="docutils literal notranslate"><span class="pre">QENSResult.popt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.pcov"><code class="docutils literal notranslate"><span class="pre">QENSResult.pcov</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.infodict"><code class="docutils literal notranslate"><span class="pre">QENSResult.infodict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.mesg"><code class="docutils literal notranslate"><span class="pre">QENSResult.mesg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.ier"><code class="docutils literal notranslate"><span class="pre">QENSResult.ier</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.residuals"><code class="docutils literal notranslate"><span class="pre">QENSResult.residuals</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.__init__"><code class="docutils literal notranslate"><span class="pre">QENSResult.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.print_result"><code class="docutils literal notranslate"><span class="pre">QENSResult.print_result()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.QENSResult.validate_result"><code class="docutils literal notranslate"><span class="pre">QENSResult.validate_result()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#qensfit.qensfit.load_ascii"><code class="docutils literal notranslate"><span class="pre">load_ascii()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="qensfit.plotcycler.html">qensfit.plotcycler</a></li>
 </ul>
 </li>
 </ul>
@@ -78,7 +153,6 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../api.html">API</a></li>
-          <li class="breadcrumb-item"><a href="qensfit.html">qensfit</a></li>
       <li class="breadcrumb-item active">qensfit.qensfit</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/qensfit.qensfit.rst.txt" rel="nofollow"> View page source</a>
@@ -1190,7 +1264,8 @@ the files’ contents.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="qensfit.plotcycler.html" class="btn btn-neutral float-left" title="qensfit.plotcycler" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api.html" class="btn btn-neutral float-left" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="qensfit.plotcycler.html" class="btn btn-neutral float-right" title="qensfit.plotcycler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -1,4 +1,4 @@
-qensfit.plotcycler
+﻿qensfit.plotcycler
 ==================
 
 .. automodule:: qensfit.plotcycler

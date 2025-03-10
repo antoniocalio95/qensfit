@@ -4,4 +4,5 @@ API
    :toctree: generated
    :recursive:
 
-   qensfit
+   qensfit.qensfit
+   qensfit.plotcycler

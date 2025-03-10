@@ -31,7 +31,7 @@ USAGE:
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
    Home Page <self>
