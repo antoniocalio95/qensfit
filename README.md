@@ -1,7 +1,7 @@
-QENSFit documentation
+QENSFit Version: 0.0.4
 =====================
 
-*QENSFit* is a little library that enables easy fitting of
+**QENSFit** is a little library that enables easy fitting of
 Quasielastic Neutron Scattering data.
 
 It borrows some concepts from the popular lmfit package,
@@ -30,3 +30,4 @@ USAGE:
 * Plot fits and parameters, and Save your results.
 
 
+Full Documentation at https://qensfit.readthedocs.io/

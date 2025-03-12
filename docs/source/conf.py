@@ -8,13 +8,16 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../../src'))
 
+from qensfit import __version__
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'QENSFit'
 copyright = '2025, Antonino Caliò'
 author = 'Antonino Caliò'
-release = '0.0.1'
+release = __version__
+version = '.'.join(release.split('.')[:2])  # Major.Minor version (e.g., 0.0)
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -64,6 +67,12 @@ def generate_readme_from_index():
         if line.strip().startswith(".. toctree::"):
             break
         readme_content.append(line)
+
+    # Add the version to the README content
+    readme_content[0] =  f"QENSFit Version: {__version__}\n"  # Add version at the top
+
+    readme_content.append("Full Documentation at "
+                          "https://qensfit.readthedocs.io/\n")
 
     # Write the extracted content to README.md
     with open(readme_path, "w") as readme_file:

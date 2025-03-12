@@ -1217,6 +1217,7 @@ class Model:
                 ax[0,i].xaxis.set_tick_params(labelbottom=True)
                 ax[0,i].set_xlabel(xlabel)
                 ax[0,i].set_ylabel(ylabel)
+                ax[0,i].set_title(key)
 
                 if not data_only:
                     ax[0,i].plot(self.res[key].x[i],
@@ -1329,6 +1330,8 @@ class Model:
                                      **pltpar_kw)
                 ax_par[0,j*nf + i].set_ylabel(plt_data.columns[2*i])
                 ax_par[0,j*nf + i].set_xlabel(plt_data.index.name)
+                if i == 0:
+                    ax_par[0,j*nf + i].set_title(key)
 
             glob_data = pd.concat(
                 [glob_data, self.res[key].params.global_to_df(
