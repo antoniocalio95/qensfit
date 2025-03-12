@@ -61,6 +61,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.plot_fits"><code class="docutils literal notranslate"><span class="pre">Model.plot_fits()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.plot_par"><code class="docutils literal notranslate"><span class="pre">Model.plot_par()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.run_fit"><code class="docutils literal notranslate"><span class="pre">Model.run_fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.save_fits"><code class="docutils literal notranslate"><span class="pre">Model.save_fits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.save_par"><code class="docutils literal notranslate"><span class="pre">Model.save_par()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#qensfit.qensfit.ParList"><code class="docutils literal notranslate"><span class="pre">ParList</span></code></a><ul>
@@ -201,11 +203,22 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Object which takes in the target fit function, a list of <code class="docutils literal notranslate"><span class="pre">Parameter</span></code>,
 and the input data in the form of a dictionary of <code class="docutils literal notranslate"><span class="pre">QENSDataset</span></code>.
-A dictionary of <code class="docutils literal notranslate"><span class="pre">QENSResult</span></code> is generated when <code class="docutils literal notranslate"><span class="pre">Model.run_fit()</span></code></p>
+A dictionary of <code class="docutils literal notranslate"><span class="pre">QENSResult</span></code> is generated when <code class="docutils literal notranslate"><span class="pre">Model.run_fit()</span></code> is
+called.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="qensfit.qensfit.Model.target">
 <span class="sig-name descname"><span class="pre">target</span></span><a class="headerlink" href="#qensfit.qensfit.Model.target" title="Link to this definition"></a></dt>
-<dd><p>Target function to be used as a model to run the fit.</p>
+<dd><p>Target function to be used as a model to run the fit.
+Because of the way the arguments are parsed from the target’s
+signature, it is necessary to explicitly declare the independent
+variable as a positional-only argument (before the /), the
+parameters as positional or keyword arguments (between the /
+and the *), and q and/or other constants as keyword-only arguments
+(after the *). Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit_func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="n">par1</span><span class="p">,</span> <span class="n">par2</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">const1</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">const1</span> <span class="o">+</span> <span class="p">(</span><span class="n">par1</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">par2</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>callable</p>
@@ -324,7 +337,7 @@ can be interpreted as a dictionary.</p></li>
 <dt class="sig sig-object py" id="qensfit.qensfit.Model.plot_fits">
 <span class="sig-name descname"><span class="pre">plot_fits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'E</span> <span class="pre">(meV)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Scattering</span> <span class="pre">Intensity</span> <span class="pre">(A.U.)'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plt_kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.plot_fits" title="Link to this definition"></a></dt>
 <dd><p>Plots the input data and the fits together, with residuals,
-in a single window which can be cycled through</p>
+in a single window which can be cycled through.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -373,12 +386,74 @@ for more details.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qensfit.qensfit.Model.run_fit">
-<span class="sig-name descname"><span class="pre">run_fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.run_fit" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autosave</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.run_fit" title="Link to this definition"></a></dt>
 <dd><p>Method that runs the fit, generates the QENSResult objects,
 and places them in a dictionary accessible as <code class="docutils literal notranslate"><span class="pre">Model.res</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – Lets the user decide if they want to plot all the fits and
+parameters automatically without having to call
+the plot functions. For more customisation of the plots, set
+to False, then call the plot functions yourself to pass more
+arguments to plt.errorbar. The default is False.</p></li>
+<li><p><strong>autosave</strong> (<em>bool</em><em>, </em><em>optional</em>) – Lets the user decide if they want to save all the results
+(fits and parameters) automatically without having to call
+the save functions. To change the save directory from the
+default, set to False, and call the save functions separately,
+indicating the path explicitly. The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.save_fits">
+<span class="sig-name descname"><span class="pre">save_fits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'results/'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.save_fits" title="Link to this definition"></a></dt>
+<dd><p>Saves fit data in a csv file for each dataset, in the same format
+as the input data from Mantid. The data is saved in blocks, each
+separated by a line containing the q value. Each block contains
+five columns separated by commas: X, Y, dY (uncertainties),
+X_fit and Y_fit. Filenames will be the same as the dataset names.</p>
+<p>WARNING: X_fit and Y_fit have different dimensions than X, Y and dY,
+because the fit arrays are denser for plotting reasons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>folder</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory in which the files are saved. The default is ‘results/’.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.save_par">
+<span class="sig-name descname"><span class="pre">save_par</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'q</span> <span class="pre">(A^-1)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_title_glob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'T</span> <span class="pre">(K)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'results/'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.save_par" title="Link to this definition"></a></dt>
+<dd><p>Saves files containing the values of the best fit parameters and
+their uncertainties. A file with the free parameters will be saved
+for each dataset (and named like the dataset), plus one file
+containing all the global parameters. The files are comma-separated
+and contain columns for each parameter and its uncertainty.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>str</em><em>, </em><em>optional</em>) – Index to be used as the x axis to plot free parameters.
+The default is ‘q’, but it can be another string corresponding
+to any key in the constants dictionary (provided that it has
+the same number of entries as the number of fitted curves).</p></li>
+<li><p><strong>x_title</strong> (<em>str</em><em>, </em><em>optional</em>) – x axis label for the free parameters plot.
+The default is ‘q (A^-1)’.</p></li>
+<li><p><strong>x_title_glob</strong> (<em>str</em><em>, </em><em>optional</em>) – x axis label for the global parameters plot.
+The default is ‘T (K)’.</p></li>
+<li><p><strong>folder</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory in which the files are saved. The default is ‘results/’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>

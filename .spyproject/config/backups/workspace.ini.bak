@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['src\\qensfit\\qensfit.py', 'examples\\test.py', 'pyproject.toml']
+recent_files = ['src\\qensfit\\qensfit.py', 'src\\qensfit\\plotcycler.py', 'examples\\test.py', 'docs\\source\\conf.py', 'pyproject.toml', 'readthedocs.yml']
 
 [main]
 version = 0.2.0

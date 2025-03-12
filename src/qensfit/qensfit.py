@@ -10,12 +10,14 @@ import os
 import re
 import copy
 from functools import partial
+from itertools import zip_longest
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 from alive_progress import alive_bar
 from qensfit.plotcycler import SubplotCycler
+
 
 class Parameter:
     """
@@ -967,12 +969,25 @@ class Model:
     """
     Object which takes in the target fit function, a list of ``Parameter``,
     and the input data in the form of a dictionary of ``QENSDataset``.
-    A dictionary of ``QENSResult`` is generated when ``Model.run_fit()``
+    A dictionary of ``QENSResult`` is generated when ``Model.run_fit()`` is
+    called.
 
     Attributes
     ----------
     target : callable
         Target function to be used as a model to run the fit.
+        Because of the way the arguments are parsed from the target's
+        signature, it is necessary to explicitly declare the independent
+        variable as a positional-only argument (before the /), the
+        parameters as positional or keyword arguments (between the /
+        and the \*), and q and/or other constants as keyword-only arguments
+        (after the \*). Example:
+
+        .. code-block:: python
+
+            def fit_func(x, /, par1, par2, *, const1):
+                return const1 + (par1 * x) + np.exp(x / par2)
+
     pnames : list
         List of parameter names as inspected from the target function.
     cnames : list
@@ -1034,15 +1049,16 @@ class Model:
         self.constants = kwargs
         self.res = dict.fromkeys(self.ds.keys())
         self.n_ds = len(self.ds)
-        self._check_params(parlist)
+        self._parse_params(parlist)
         self._par_cycler = None
 
     def __repr__(self):
         return (f'Model object tied to function {self.target}\n\n'
                 f'Parameters:\n{self.params}\n\n'
-                f'Data: {self.ds}\n')
+                f'Data: {self.ds}\n'
+                f'Results: {self.res}\n')
 
-    def _check_params(self, parlist: list):
+    def _parse_params(self, parlist: list):
         self.sig = inspect.signature(self.target)
 
         lst = []
@@ -1078,10 +1094,27 @@ class Model:
 
         return result.flatten()
 
-    def run_fit(self):
+    def run_fit(self,
+                plot: bool = False,
+                autosave: bool = False):
         """
         Method that runs the fit, generates the QENSResult objects,
         and places them in a dictionary accessible as ``Model.res``.
+
+        Parameters
+        ----------
+        plot : bool, optional
+            Lets the user decide if they want to plot all the fits and
+            parameters automatically without having to call
+            the plot functions. For more customisation of the plots, set
+            to False, then call the plot functions yourself to pass more
+            arguments to plt.errorbar. The default is False.
+        autosave : bool, optional
+            Lets the user decide if they want to save all the results
+            (fits and parameters) automatically without having to call
+            the save functions. To change the save directory from the
+            default, set to False, and call the save functions separately,
+            indicating the path explicitly. The default is False.
 
         Returns
         -------
@@ -1128,6 +1161,12 @@ class Model:
                 self.res[key].print_result(index = self.ds[key].q,
                                        index_title = 'q')
                 prog_bar()
+        if plot:
+            self.plot_fits(fmt = ' o')
+            self.plot_par(fmt = ' o')
+        if autosave:
+            self.save_fits()
+            self.save_par()
 
     def plot_fits(self,
                   data_only:bool = False,
@@ -1136,7 +1175,7 @@ class Model:
                   **plt_kw):
         """
         Plots the input data and the fits together, with residuals,
-        in a single window which can be cycled through
+        in a single window which can be cycled through.
 
         Parameters
         ----------
@@ -1158,9 +1197,10 @@ class Model:
         None.
 
         """
+        plt.close("all")
         for key in self.ds:
             fig, ax = plt.subplots(
-                2 if not data_only else 1 ,
+                2 if not data_only else 1,
                 self.ds[key].n_q,
                 sharey = 'row',
                 sharex = 'col',
@@ -1197,6 +1237,41 @@ class Model:
 
             self.res[key].cycler = SubplotCycler(
                 fig, ax) if self.ds[key].n_q > 1 else None
+
+    def save_fits(self, folder: str = 'results/'):
+        """
+        Saves fit data in a csv file for each dataset, in the same format
+        as the input data from Mantid. The data is saved in blocks, each
+        separated by a line containing the q value. Each block contains
+        five columns separated by commas: X, Y, dY (uncertainties),
+        X_fit and Y_fit. Filenames will be the same as the dataset names.
+
+        WARNING: X_fit and Y_fit have different dimensions than X, Y and dY,
+        because the fit arrays are denser for plotting reasons.
+
+        Parameters
+        ----------
+        folder : str, optional
+            Directory in which the files are saved. The default is 'results/'.
+
+        Returns
+        -------
+        None.
+
+        """
+        os.makedirs(folder, exist_ok = True)
+        for key, value in self.ds.items():
+            with open(folder + key + '.csv', 'w') as f:
+                f.writelines("#X,Y,E,Xfit,Yfit\n")
+                for i in range(value.x.shape[0]):
+                    f.writelines(f'{value.q[i]}\n')
+                    for x, y, e, xf, yf in zip_longest(value.x[i],
+                                                       value.y[i],
+                                                       value.dy[i],
+                                                       self.res[key].x[i],
+                                                       self.res[key].y[i],
+                                                       fillvalue = ''):
+                        f.writelines(f'{x},{y},{e},{xf},{yf}\n')
 
     def plot_par(self,
                  index: str = 'q',
@@ -1276,6 +1351,55 @@ class Model:
                                      **pltpar_kw)
                 ax_glob[0,i].set_ylabel(glob_data.columns[2*i])
                 ax_glob[0,i].set_xlabel(glob_data.index.name)
+
+    def save_par(self,
+                 index: str = 'q',
+                 x_title: str = 'q (A^-1)',
+                 x_title_glob: str = 'T (K)',
+                 folder: str = 'results/'):
+        """
+        Saves files containing the values of the best fit parameters and
+        their uncertainties. A file with the free parameters will be saved
+        for each dataset (and named like the dataset), plus one file
+        containing all the global parameters. The files are comma-separated
+        and contain columns for each parameter and its uncertainty.
+
+        Parameters
+        ----------
+        index : str, optional
+            Index to be used as the x axis to plot free parameters.
+            The default is 'q', but it can be another string corresponding
+            to any key in the constants dictionary (provided that it has
+            the same number of entries as the number of fitted curves).
+        x_title : str, optional
+            x axis label for the free parameters plot.
+            The default is 'q (A^-1)'.
+        x_title_glob : str, optional
+            x axis label for the global parameters plot.
+            The default is 'T (K)'.
+        folder : str, optional
+            Directory in which the files are saved. The default is 'results/'.
+
+        Returns
+        -------
+        None.
+
+        """
+        glob_data = pd.DataFrame()
+        for j, key in enumerate(self.res):
+            if isinstance(index, str):
+                if index == 'q':
+                    index = self.ds[key].q
+                else:
+                    index = self.ds[key].constants[index]
+            out_data = self.res[key].params.free_to_df(
+                index,
+                index_title = x_title)
+            out_data.to_csv(folder + key + '_params.csv')
+            glob_data = pd.concat(
+                [glob_data, self.res[key].params.global_to_df(
+                    index = [key], index_title = x_title_glob)])
+        glob_data.to_csv(folder + 'global_params.csv')
 
 def load_ascii(filename: str,
               sep: str = ',',

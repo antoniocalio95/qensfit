@@ -1,6 +1,6 @@
 Metadata-Version: 2.2
 Name: qensfit
-Version: 0.0.2
+Version: 0.0.3
 Summary: A library for fitting Quasielastic Neutron Scattering data.
 Author-email: Antonino Caliò <antoniocalio95@gmail.com>
 License:                     GNU GENERAL PUBLIC LICENSE
