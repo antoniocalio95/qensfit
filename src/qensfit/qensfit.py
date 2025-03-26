@@ -759,15 +759,12 @@ class QENSDataset:
 
         """
         self.name = name
-        self.x = np.array(x)
-        self.y = np.array(y)
-        self.dy = np.array(dy)
-        self.q = np.array(q)
+        self.x = np.atleast_2d(np.array(x))
+        self.y = np.atleast_2d(np.array(y))
+        self.dy = np.atleast_2d(np.array(dy))
+        self.q = np.atleast_1d(np.array(q))
         self.n_q = self.q.size
-        if self.x.ndim > 1:
-            self.n_e = len(self.x[0])
-        else:
-            self.n_e = len(self.x)
+        self.n_e = len(self.x[0])
         self._check_data()
 
     def __repr__(self):
@@ -1238,10 +1235,78 @@ class Model:
                     ax[1,i].axhline(y=-3, color = 'r', linestyle = '--')
                     ax[1,i].axhline(y=3, color = 'r', linestyle = '--')
 
-
-
             self.res[key].cycler = SubplotCycler(
                 fig, ax) if self.ds[key].n_q > 1 else None
+
+    def plot_fits_grouped(self,
+                  data_only:bool = False,
+                  xlabel: str = 'E (meV)',
+                  ylabel: str = 'Scattering Intensity (A.U.)',
+                  **plt_kw):
+        """
+        Plots the input data and the fits together, with residuals,
+        in a single window which can be cycled through. Use this in case of
+        many 1D datasets as opposed to few 2D datasets.
+
+        Parameters
+        ----------
+        data_only : bool, optional
+            Lets the user decide if they want to only plot the input data,
+            or data and fit together. The default is False.
+        xlabel : str, optional
+            Label for the x axis. The default is 'E (meV)'.
+        ylabel : str, optional
+            Label for the y axis.
+            The default is 'Scattering Intensity (A.U.)'.
+        **plt_kw : TYPE
+            Keyword arguments passed to matplotlib.pyplot.errorbar (i.e.
+            formatting styles, etc.). Refer to the matplotlib documentation
+            for more details.
+
+        Returns
+        -------
+        None.
+
+        """
+        plt.close("all")
+
+        fig, ax = plt.subplots(
+            2 if not data_only else 1,
+            self.n_ds,
+            sharey = 'row',
+            sharex = 'col',
+            figsize  = (16,9),
+            layout = 'tight',
+            height_ratios = [4,1] if not data_only else None,
+            squeeze = False)
+
+        for i, key in enumerate(self.ds):
+            ax[0,i].errorbar(self.ds[key].x[0],
+                             self.ds[key].y[0],
+                             self.ds[key].dy[0],
+                             **plt_kw)
+            ax[0,i].yaxis.set_tick_params(labelleft=True)
+            ax[0,i].xaxis.set_tick_params(labelbottom=True)
+            ax[0,i].set_xlabel(xlabel)
+            ax[0,i].set_ylabel(ylabel)
+            ax[0,i].set_title(self.ds[key].name)
+
+            if not data_only:
+                ax[0,i].plot(self.res[key].x[0],
+                             self.res[key].y[0])
+
+                ax[1,i].plot(self.ds[key].x[0],
+                             self.res[key].residuals[0])
+                ax[1,i].yaxis.set_tick_params(labelleft=True)
+                ax[1,i].xaxis.set_tick_params(labelbottom=True)
+                ax[1,i].set_xlabel(xlabel)
+                ax[1,i].set_ylabel('Normalised Residuals')
+                ax[1,i].set_ylim(bottom = -5, top = 5)
+                ax[1,i].axhline(y=0, color = 'g', linestyle = '--')
+                ax[1,i].axhline(y=-3, color = 'r', linestyle = '--')
+                ax[1,i].axhline(y=3, color = 'r', linestyle = '--')
+
+        self.res[key].cycler = SubplotCycler(fig, ax)
 
     def save_fits(self, folder: str = 'results/'):
         """
@@ -1346,20 +1411,84 @@ class Model:
             ax_par,
             simultaneous_plots = nf) if self.n_ds > 1 else None
         if self.n_ds > 1:
-            fig_glob, ax_glob = plt.subplots(
-                1,
-                self.params.n_global,
-                figsize  = (6 * self.params.n_global,6),
-                layout = 'tight',
-                squeeze = False)
-            for i in range(self.params.n_global):
-                ax_glob[0,i].errorbar(glob_data.index,
-                                     glob_data.iloc[:,2*i],
-                                     glob_data.iloc[:,2*i+1],
-                                     **pltpar_kw)
-                ax_glob[0,i].set_ylabel(
-                    self.res[key].params[glob_data.columns[2*i]].ax_name)
-                ax_glob[0,i].set_xlabel(glob_data.index.name)
+            if self.params.n_global >0:
+                fig_glob, ax_glob = plt.subplots(
+                    1,
+                    self.params.n_global,
+                    figsize  = (6 * self.params.n_global,6),
+                    layout = 'tight',
+                    squeeze = False)
+                for i in range(self.params.n_global):
+                    ax_glob[0,i].errorbar(glob_data.index,
+                                         glob_data.iloc[:,2*i],
+                                         glob_data.iloc[:,2*i+1],
+                                         **pltpar_kw)
+                    ax_glob[0,i].set_ylabel(
+                        self.res[key].params[glob_data.columns[2*i]].ax_name)
+                    ax_glob[0,i].set_xlabel(glob_data.index.name)
+
+    def plot_par_grouped(self,
+                 index: str = 'ds',
+                 x_title: str = r'$q\ (\AA^{-1})$',
+                 **pltpar_kw):
+        """
+        Plots the Parameter values for all datasets in the same graph.
+        Useful when fitting many datasets separately, as the standard
+        plot_par would return graphs with only one point in them.
+        This method does not plot global parameters as it assumes
+        that only one curve is present in each dataset.
+
+        Parameters
+        ----------
+        index : str, optional
+            Index to be used as the x axis to plot free parameters.
+            The default is 'ds', which will use the keys in the dataset
+            dictionary. A custom array can be provided.
+        x_title : str, optional
+            x axis label for the free parameters plot.
+            The default is r'$q\ (\AA^{-1})$'.
+        **pltpar_kw : TYPE
+            Keyword arguments passed to matplotlib.pyplot.errorbar (i.e.
+            formatting styles, etc.). Refer to the matplotlib documentation
+            for more details.
+
+        Returns
+        -------
+        None.
+
+        """
+        fig_par, ax_par = plt.subplots(
+            1,
+            self.params.n_free,
+            figsize  = (6 * self.params.n_free,6),
+            layout = 'tight',
+            squeeze = False)
+        if isinstance(index, str):
+            if index == 'ds':
+                try:
+                    index = np.array([float(k) for k in self.res])
+                except:
+                    index = self.res.keys()
+        plt_data = pd.DataFrame()
+        for j, key in enumerate(self.res):
+            plt_data = pd.concat(
+                [plt_data,
+                 self.res[key].params.free_to_df([index[j]],
+                                                 index_title = x_title)])
+        nf = self.res[key].params.n_free
+        for i in range(nf):
+            ax_par[0,i].errorbar(plt_data.index,
+                                 plt_data.iloc[:,2*i],
+                                 plt_data.iloc[:,2*i+1],
+                                 **pltpar_kw)
+            ax_par[0,i].set_ylabel(
+                self.res[key].params[plt_data.columns[2*i]].ax_name)
+            ax_par[0,i].set_xlabel(plt_data.index.name)
+            if i == 0:
+                ax_par[0,i].set_title(key)
+
+        self._par_cycler = None
+
 
     def save_par(self,
                  index: str = 'q',

@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>qensfit.qensfit &mdash; QENSFit 0.0.41 documentation</title>
+  <title>qensfit.qensfit &mdash; QENSFit 0.0.42 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=20c5f126"></script>
+      <script src="../_static/documentation_options.js?v=173d7b4c"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
@@ -59,7 +59,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model._par_cycler"><code class="docutils literal notranslate"><span class="pre">Model._par_cycler</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.__init__"><code class="docutils literal notranslate"><span class="pre">Model.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.plot_fits"><code class="docutils literal notranslate"><span class="pre">Model.plot_fits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.plot_fits_grouped"><code class="docutils literal notranslate"><span class="pre">Model.plot_fits_grouped()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.plot_par"><code class="docutils literal notranslate"><span class="pre">Model.plot_par()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.plot_par_grouped"><code class="docutils literal notranslate"><span class="pre">Model.plot_par_grouped()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.run_fit"><code class="docutils literal notranslate"><span class="pre">Model.run_fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.save_fits"><code class="docutils literal notranslate"><span class="pre">Model.save_fits()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#qensfit.qensfit.Model.save_par"><code class="docutils literal notranslate"><span class="pre">Model.save_par()</span></code></a></li>
@@ -358,6 +360,31 @@ for more details.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.plot_fits_grouped">
+<span class="sig-name descname"><span class="pre">plot_fits_grouped</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'E</span> <span class="pre">(meV)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Scattering</span> <span class="pre">Intensity</span> <span class="pre">(A.U.)'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plt_kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.plot_fits_grouped" title="Link to this definition"></a></dt>
+<dd><p>Plots the input data and the fits together, with residuals,
+in a single window which can be cycled through. Use this in case of
+many 1D datasets as opposed to few 2D datasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – Lets the user decide if they want to only plot the input data,
+or data and fit together. The default is False.</p></li>
+<li><p><strong>xlabel</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for the x axis. The default is ‘E (meV)’.</p></li>
+<li><p><strong>ylabel</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for the y axis.
+The default is ‘Scattering Intensity (A.U.)’.</p></li>
+<li><p><strong>**plt_kw</strong> (<em>TYPE</em>) – Keyword arguments passed to matplotlib.pyplot.errorbar (i.e.
+formatting styles, etc.). Refer to the matplotlib documentation
+for more details.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="qensfit.qensfit.Model.plot_par">
 <span class="sig-name descname"><span class="pre">plot_par</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'$q\\</span> <span class="pre">(\\AA^{-1})$'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_title_glob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'$T\\</span> <span class="pre">(K)$'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">pltpar_kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.plot_par" title="Link to this definition"></a></dt>
 <dd><p>Plots the Parameter values, for both free and global
@@ -373,6 +400,33 @@ the same number of entries as the number of fitted curves).</p></li>
 The default is r’$q(AA^{-1})$’.</p></li>
 <li><p><strong>x_title_glob</strong> (<em>str</em><em>, </em><em>optional</em>) – x axis label for the global parameters plot.
 The default is r’$T(K)$’.</p></li>
+<li><p><strong>**pltpar_kw</strong> (<em>TYPE</em>) – Keyword arguments passed to matplotlib.pyplot.errorbar (i.e.
+formatting styles, etc.). Refer to the matplotlib documentation
+for more details.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qensfit.qensfit.Model.plot_par_grouped">
+<span class="sig-name descname"><span class="pre">plot_par_grouped</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ds'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'$q\\</span> <span class="pre">(\\AA^{-1})$'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">pltpar_kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qensfit.qensfit.Model.plot_par_grouped" title="Link to this definition"></a></dt>
+<dd><p>Plots the Parameter values for all datasets in the same graph.
+Useful when fitting many datasets separately, as the standard
+plot_par would return graphs with only one point in them.
+This method does not plot global parameters as it assumes
+that only one curve is present in each dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>str</em><em>, </em><em>optional</em>) – Index to be used as the x axis to plot free parameters.
+The default is ‘ds’, which will use the keys in the dataset
+dictionary. A custom array can be provided.</p></li>
+<li><p><strong>x_title</strong> (<em>str</em><em>, </em><em>optional</em>) – x axis label for the free parameters plot.
+The default is r’$q(AA^{-1})$’.</p></li>
 <li><p><strong>**pltpar_kw</strong> (<em>TYPE</em>) – Keyword arguments passed to matplotlib.pyplot.errorbar (i.e.
 formatting styles, etc.). Refer to the matplotlib documentation
 for more details.</p></li>
