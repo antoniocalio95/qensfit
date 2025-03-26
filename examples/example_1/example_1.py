@@ -18,8 +18,10 @@ def fitmodel(x, /, a, omega, phi, *, q):
 # you declared in the model function, so that you can control their initial
 # values, bounds, fix them or make them global
 
-lst = [qf.Parameter('omega', [0.2, 0.6, 1.7], 0., 50.),
-       qf.Parameter('phi', 1., 0., 5., is_global = True),
+lst = [qf.Parameter('omega', [0.2, 0.6, 1.7], 0., 50.,
+                    ax_name = r'$\omega\ (rad/s)$'),
+       qf.Parameter('phi', 1., 0., 5., is_global = True,
+                    ax_name = r'$\Phi\ (rad)$'),
        qf.Parameter('a', 10., 5., 25., is_fixed = False),]
 
 

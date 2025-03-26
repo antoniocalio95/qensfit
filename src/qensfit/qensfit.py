@@ -763,8 +763,11 @@ class QENSDataset:
         self.y = np.array(y)
         self.dy = np.array(dy)
         self.q = np.array(q)
-        self.n_q = len(self.q)
-        self.n_e = len(self.x[0])
+        self.n_q = self.q.size
+        if self.x.ndim > 1:
+            self.n_e = len(self.x[0])
+        else:
+            self.n_e = len(self.x)
         self._check_data()
 
     def __repr__(self):
@@ -1217,7 +1220,8 @@ class Model:
                 ax[0,i].xaxis.set_tick_params(labelbottom=True)
                 ax[0,i].set_xlabel(xlabel)
                 ax[0,i].set_ylabel(ylabel)
-                ax[0,i].set_title(key)
+                ax[0,i].set_title(self.ds[key].name +
+                                  f' at q = {self.ds[key].q[i]}')
 
                 if not data_only:
                     ax[0,i].plot(self.res[key].x[i],
@@ -1328,7 +1332,8 @@ class Model:
                                      plt_data.iloc[:,2*i],
                                      plt_data.iloc[:,2*i+1],
                                      **pltpar_kw)
-                ax_par[0,j*nf + i].set_ylabel(plt_data.columns[2*i])
+                ax_par[0,j*nf + i].set_ylabel(
+                    self.res[key].params[plt_data.columns[2*i]].ax_name)
                 ax_par[0,j*nf + i].set_xlabel(plt_data.index.name)
                 if i == 0:
                     ax_par[0,j*nf + i].set_title(key)
@@ -1352,7 +1357,8 @@ class Model:
                                      glob_data.iloc[:,2*i],
                                      glob_data.iloc[:,2*i+1],
                                      **pltpar_kw)
-                ax_glob[0,i].set_ylabel(glob_data.columns[2*i])
+                ax_glob[0,i].set_ylabel(
+                    self.res[key].params[glob_data.columns[2*i]].ax_name)
                 ax_glob[0,i].set_xlabel(glob_data.index.name)
 
     def save_par(self,

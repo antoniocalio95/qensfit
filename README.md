@@ -1,4 +1,4 @@
-QENSFit Version: 0.0.4
+QENSFit Version: 0.0.41
 =====================
 
 **QENSFit** is a little library that enables easy fitting of
