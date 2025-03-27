@@ -1197,7 +1197,7 @@ class Model:
         None.
 
         """
-        plt.close("all")
+
         for key in self.ds:
             fig, ax = plt.subplots(
                 2 if not data_only else 1,
@@ -1268,7 +1268,6 @@ class Model:
         None.
 
         """
-        plt.close("all")
 
         fig, ax = plt.subplots(
             2 if not data_only else 1,
